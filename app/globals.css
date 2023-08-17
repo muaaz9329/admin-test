@@ -2,13 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+:root,
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /* background: linear-gradient(225deg, #fecaad 0%, #fff8f5 100%); */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -28,11 +38,11 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 21 98% 84%;
+    --input: 21 98% 84%;
+    --ring: 21 98% 84%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {

@@ -18,9 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" dir="rtl">
       <body
-        className={appFont.className + " bg-primary text-primary-foreground"}
+        className={
+          appFont.className + " bg-gradient-body text-primary-foreground"
+        }
       >
         {children}
       </body>
