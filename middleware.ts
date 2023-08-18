@@ -1,8 +1,9 @@
 // middleware.ts
 import { createI18nMiddleware } from "next-international/middleware";
 import { NextRequest } from "next/server";
+import { DEFAULT_LOCALE, LOCALES } from "./internationalization";
 
-const I18nMiddleware = createI18nMiddleware(["en", "he"] as const, "he", {
+const I18nMiddleware = createI18nMiddleware(LOCALES, DEFAULT_LOCALE, {
   urlMappingStrategy: "rewrite",
 });
 

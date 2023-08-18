@@ -1,1 +1,1 @@
-type WithParamsLocale<T> = T & { params: { locale: string } };
+type WithParamsLocale<T> = T & { params: { locale: "he" | "en" } };

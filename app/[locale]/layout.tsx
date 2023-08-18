@@ -27,12 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
   params,
-}: {
-  children: React.ReactNode;
-  params: {
-    locale: string;
-  };
-}) {
+}: React.PropsWithChildren<WithParamsLocale<{}>>) {
   return (
     <html lang={params.locale} dir="rtl">
       <body
