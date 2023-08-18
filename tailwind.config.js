@@ -20,6 +20,8 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        placeholder: "hsl(var(--placeholder))",
+        gray: "hsl(var(--gray))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -73,6 +75,7 @@ module.exports = {
       backgroundImage: {
         "gradient-body":
           "linear-gradient(225deg, hsl(var(--primary)) 0%, #FFF8F5 100%);",
+        "wave-primary": "url('/images/wave-primary.png')",
       },
     },
   },

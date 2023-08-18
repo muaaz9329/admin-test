@@ -8,8 +8,12 @@ body {
   height: 100%;
 }
 
-body {
-  /* background: linear-gradient(225deg, #fecaad 0%, #fff8f5 100%); */
+.content-wrapper {
+  background: url("/images/wave-primary.png"),
+    white -2px 0px / 103.168% 147.512%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
 }
 
 @layer base {
@@ -29,7 +33,7 @@ body {
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 0 0% 50%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 210 40% 96.1%;
@@ -37,6 +41,9 @@ body {
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+
+    --placeholder: 0 0% 70%;
+    --gray: 0 0% 30%;
 
     --border: 21 98% 84%;
     --input: 21 98% 84%;

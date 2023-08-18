@@ -17,12 +17,13 @@ export default function DashboardRootLayout({
         <div className="flex-grow">
           <div className="flex flex-col ">
             <DashboardHeader />
+            {/* 4rem resembles to the height of the header */}
             <main className="p-6 flex-grow h-[calc(100vh-4rem)]">
               {/* we need a global card in dashboard where the content is gonna rest  */}
               <div className="h-8">
                 <h3>לימודים יומיים</h3>
               </div>
-              <Card className="p-3 rounded-2xl h-[calc(100%-2rem)] border-primary">
+              <Card className="p-3 rounded-2xl h-[calc(100%-2rem)] border-primary content-wrapper">
                 <ScrollArea dir="rtl" className="h-full">
                   <div className="px-7 py-2">{children}</div>
                 </ScrollArea>

@@ -24,10 +24,7 @@ export default function RootLayout({
           appFont.className + " bg-gradient-body text-primary-foreground"
         }
       >
-        <div className="absolute bottom-0 z-[0] left-0">
-          <img src="images/wave-primary.png" className="w-[100vw] h-[50vh]" />
-        </div>
-        <div className="z-10">{children}</div>
+        {children}
       </body>
     </html>
   );
