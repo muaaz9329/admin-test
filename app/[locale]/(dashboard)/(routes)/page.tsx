@@ -2,12 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { getI18n } from "@/internationalization/server";
 
-export default function Home() {
+export default async function Home() {
+  const t = await getI18n();
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label>Name</Label>
+        <Label>{t("hello")}</Label>
         <Input />
       </div>
 

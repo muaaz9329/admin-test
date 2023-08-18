@@ -3,18 +3,21 @@ import { DashboardHeader } from "./components/header";
 import { DashboardSidebar } from "./components/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+/**
+ * Layout for the whole dashboard
+ * @param param0
+ * @returns
+ */
 export default function DashboardRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Setting up the root layout for whole dashboard
-
   return (
     <>
       <div className="flex h-screen max-h-screen">
         <DashboardSidebar />
-        <div className="flex-grow">
+        <div className="flex-grow basis-[768px] shrink-0 ">
           <div className="flex flex-col ">
             <DashboardHeader />
             {/* 4rem resembles to the height of the header */}
