@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useLayoutConfig } from "@/hooks/use-layout-config";
 import { useScopedI18n } from "@/internationalization/client";
-import { LayoutDashboard, LayoutList, LogOut, Share2 } from "lucide-react";
+import { Banknote, BookOpen, BookOpenCheck, FileText, GalleryVertical, LayoutDashboard, LayoutList, LogOut, Newspaper, Settings, Share2, UserCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,37 +32,37 @@ export const DashboardSidebar = () => {
     {
       name: scopedT("consultation"),
       href: `/${currentLocale}/consultation`,
-      icon: null,
+      icon: Banknote,
     },
     {
       name: scopedT("requests"),
       href: `/${currentLocale}/requests`,
-      icon: null,
+      icon: UserCheck,
     },
     {
       name: scopedT("settings"),
       href: `/${currentLocale}/settings`,
-      icon: null,
+      icon: Settings,
     },
     {
       name: scopedT("dailyStudies"),
       href: `/${currentLocale}/daily-studies`,
-      icon: null,
+      icon: BookOpen,
     },
     {
       name: scopedT("homeSlider"),
       href: `/${currentLocale}/home-slider`,
-      icon: null,
+      icon: GalleryVertical,
     },
     {
       name: scopedT("detailForm"),
       href: `/${currentLocale}/detail-form`,
-      icon: null,
+      icon: FileText,
     },
     {
       name: scopedT("homeSlider"),
       href: `/${currentLocale}/home-slider`,
-      icon: null,
+      icon: Newspaper,
     },
   ];
 
