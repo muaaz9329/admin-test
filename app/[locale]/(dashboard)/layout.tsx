@@ -21,7 +21,7 @@ export default function DashboardRootLayout({
           <div className="flex flex-col ">
             <DashboardHeader />
             {/* 4rem resembles to the height of the header */}
-            <main className="p-6 flex-grow h-[calc(100vh-4rem)]">
+            <main className="p-6 flex-grow h-[calc(100vh-5rem)]">
               {/* we need a global card in dashboard where the content is gonna rest  */}
               <div className="h-8">
                 <h3>לימודים יומיים</h3>

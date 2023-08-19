@@ -1,7 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+
+import Link from "next/link";
 import { getI18n } from "@/internationalization/server";
 
 export default async function Home() {
@@ -38,27 +40,11 @@ export default async function Home() {
         ipsa, dolorum dolor animi fugiat voluptatum assumenda nobis cupiditate
         maxime non sed, eos vel quis dicta quisquam perferendis et eius
         dignissimos deserunt natus aperiam! Totam, eum a? Impedit quisquam sequi
-        cumque obcaecati. Magnam totam ex deleniti, excepturi maiores
-        exercitationem, atque sit fuga esse optio quaerat amet eveniet? Officia
-        quaerat modi odit repellat magnam, beatae atque? Tenetur, accusamus!
-        Quae aliquam sint minus, odit consequatur vitae eligendi sequi ea
-        consequuntur distinctio voluptate velit quos repellat alias tenetur
-        aspernatur, dignissimos quasi et, similique eveniet in laboriosam ut
-        praesentium perferendis? Quod. Asperiores adipisci unde facere, nemo
-        reprehenderit mollitia perspiciatis? Rem temporibus explicabo esse quas
-        at quisquam facere iste, ut, non beatae, consequuntur repudiandae eum
-        qui cum laudantium fugiat voluptates error culpa. Ex magni quisquam fuga
-        eveniet inventore error eius accusamus doloremque ut libero. Fugiat
-        tenetur impedit reprehenderit adipisci culpa, incidunt quae dolore
-        maiores dicta nulla earum, nisi vitae praesentium doloribus qui. Modi
-        veniam ducimus expedita provident, nam dignissimos iure fuga architecto
-        recusandae facere nemo inventore eius eos similique et, quo nihil aut
-        error consectetur assumenda sed quia. Ex eos vitae repellat. Quasi
-        corporis fugit excepturi doloribus quidem obcaecati omnis soluta
-        impedit! Molestiae nesciunt impedit nisi ducimus ullam dolorum tempore,
-        veniam explicabo, quaerat, dicta porro beatae delectus tempora deleniti
-        sunt ad debitis.
+        cumque obcaecati.
       </p>
+      <Link href="/he/login" className={buttonVariants()}>
+        {t("auth.login")}
+      </Link>
     </div>
   );
 }

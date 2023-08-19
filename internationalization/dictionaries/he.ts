@@ -6,4 +6,19 @@ export default {
     password: "סיסמה",
     login: "התחברות",
   },
+  dashboard: {
+    sidebar: {
+      categories: "קטגוריות",
+      subcategories: "קטגוריות משנה",
+      links: "קישורים",
+      consultation: "ייעוץ",
+      requests: "בקשות",
+      settings: "הגדרה",
+      dailyStudies: "לימודים יומיים",
+      homeSlider: "סליידר ביתי",
+      detailForm: "טופס פירוט",
+      popupNews: "חדשות קופצות",
+      logout: "להתנתק",
+    },
+  },
 } as const;
