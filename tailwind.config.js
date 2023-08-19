@@ -76,6 +76,8 @@ module.exports = {
         "gradient-body":
           "linear-gradient(225deg, hsl(var(--primary)) 0%, #FFF8F5 100%);",
         "wave-primary": "url('/images/wave-primary.png')",
+        "gradient-primary-btn":
+          "linear-gradient(90deg, #FECDB3 0%,#FBE2D4 100%)",
       },
     },
   },

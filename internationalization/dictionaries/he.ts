@@ -7,6 +7,7 @@ export default {
     login: "התחברות",
   },
   dashboard: {
+    headerTitle: "מנהל מערכת",
     sidebar: {
       categories: "קטגוריות",
       subcategories: "קטגוריות משנה",
