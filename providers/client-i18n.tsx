@@ -1,4 +1,9 @@
+import FallbackLoader from "@/components/ui/fallback-loader";
 import { I18nProviderClient } from "@/internationalization/client";
+
+function Fallback() {
+
+}
 
 export const ClientI18n = ({
   children,
@@ -15,7 +20,10 @@ export const ClientI18n = ({
     <I18nProviderClient
       locale={params?.locale || "he"}
       // TODO: add a good loading fallback
-      fallback={<p>loading ...</p>}
+      fallback={
+        
+        <FallbackLoader/>
+      }
     >
       {children}
     </I18nProviderClient>

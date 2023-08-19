@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useLayoutConfig } from "@/hooks/use-layout-config";
 import { useScopedI18n } from "@/internationalization/client";
-import { Banknote, BookOpen, BookOpenCheck, FileText, GalleryVertical, LayoutDashboard, LayoutList, LogOut, Newspaper, Settings, Share2, UserCheck } from "lucide-react";
+import { Banknote, BookOpen,  FileText, GalleryVertical, LayoutDashboard, LayoutList, LogOut, Newspaper, Settings, Share2, UserCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

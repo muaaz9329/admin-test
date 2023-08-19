@@ -19,6 +19,18 @@ export default {
       detailForm: "Detail Form",
       popupNews: "Popup News",
       logout: "Logout",
+     
     },
   },
+  pages:{
+    newsPopup:{
+      form:"News pop-up form",
+      video:"Video",
+      image:"Image",
+      uploadVideo:"Upload Video",
+      uploadImage:"Upload Image",
+      Text:"Text",
+      Done:"Done",
+    }
+  }
 } as const;

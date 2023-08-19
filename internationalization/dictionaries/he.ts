@@ -19,6 +19,18 @@ export default {
       detailForm: "טופס פירוט",
       popupNews: "חדשות קופצות",
       logout: "להתנתק",
+      
     },
   },
+  pages:{
+    newsPopup:{
+      form:"טופס קופץ חדשות",
+      video:"וִידֵאוֹ",
+      image:"תמונה",
+      uploadVideo:" +  הוסף וידאו",
+      uploadImage:" +   להוסיף תמונה",
+      Text:"טקסט",
+      Done:"אישור",
+    }
+  }
 } as const;
