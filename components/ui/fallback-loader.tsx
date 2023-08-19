@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {}
 
-const  fallback_loader:React.FC<Props> = ()=>{
+const FallbackLoader: React.FC<Props> = () => {
   return (
     <div className="text-center h-[100%] w-[100%]">
     <div role="status">
@@ -16,4 +16,4 @@ const  fallback_loader:React.FC<Props> = ()=>{
   )
 }
 
-export default fallback_loader
+export default FallbackLoader
