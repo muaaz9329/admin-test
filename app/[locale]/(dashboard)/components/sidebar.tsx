@@ -1,67 +1,66 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { NavLink } from "@/components/ui/nav-link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useLayoutConfig } from "@/hooks/use-layout-config";
 import { useScopedI18n } from "@/internationalization/client";
 import { LayoutDashboard, LayoutList, LogOut, Share2 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 export const DashboardSidebar = () => {
   const scopedT = useScopedI18n("dashboard.sidebar");
-  const { currentLocale } = useLayoutConfig();
 
   const sidebarItems = [
     {
       name: scopedT("categories"),
-      href: `/${currentLocale}/categories`,
+      href: `/categories`,
       icon: LayoutDashboard,
     },
     {
       name: scopedT("subcategories"),
-      href: `/${currentLocale}/subcategories`,
+      href: `/subcategories`,
       icon: LayoutList,
     },
     {
       name: scopedT("links"),
-      href: `/${currentLocale}/links`,
+      href: `/links`,
       icon: Share2,
     },
     {
       name: scopedT("consultation"),
-      href: `/${currentLocale}/consultation`,
+      href: `/consultation`,
       icon: null,
     },
     {
       name: scopedT("requests"),
-      href: `/${currentLocale}/requests`,
+      href: `/requests`,
       icon: null,
     },
     {
       name: scopedT("settings"),
-      href: `/${currentLocale}/settings`,
+      href: `/settings`,
       icon: null,
     },
     {
       name: scopedT("dailyStudies"),
-      href: `/${currentLocale}/daily-studies`,
+      href: `/daily-studies`,
       icon: null,
     },
     {
       name: scopedT("homeSlider"),
-      href: `/${currentLocale}/home-slider`,
+      href: `/home-slider`,
       icon: null,
     },
     {
       name: scopedT("detailForm"),
-      href: `/${currentLocale}/detail-form`,
+      href: `/detail-form`,
       icon: null,
     },
     {
       name: scopedT("homeSlider"),
-      href: `/${currentLocale}/home-slider`,
+      href: `/home-slider`,
       icon: null,
     },
   ];
@@ -87,13 +86,14 @@ export const DashboardSidebar = () => {
           <ul className="flex flex-col gap-2">
             {sidebarItems.map((item) => (
               <li key={item.name}>
-                <Link
+                <NavLink
                   href={item.href}
                   className="flex items-center gap-3 px-4 py-2 hover:bg-primary-foreground hover:text-primary"
+                  activeClassName="bg-primary-foreground text-primary"
                 >
                   {item.icon && <item.icon className="w-6 h-6" />}
                   <span>{item.name}</span>
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
