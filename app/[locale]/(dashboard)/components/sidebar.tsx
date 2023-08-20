@@ -71,8 +71,8 @@ export const DashboardSidebar = () => {
       icon: FileText,
     },
     {
-      name: scopedT("homeSlider"),
-      href: `/home-slider`,
+      name: scopedT("popupNews"),
+      href: `/news-popup`,
       icon: Newspaper,
     },
   ];

@@ -23,12 +23,12 @@ export default function DashboardRootLayout({
             {/* 4rem resembles to the height of the header */}
             <main className="p-6 flex-grow h-[calc(100vh-5rem)]">
               {/* we need a global card in dashboard where the content is gonna rest  */}
-              <div className="h-8">
+              <div className="h-8 pr-6">
                 <h3>לימודים יומיים</h3>
               </div>
               <Card className="p-3 rounded-2xl h-[calc(100%-2rem)] border-primary content-wrapper">
                 <ScrollArea dir="rtl" className="h-full">
-                  <div className="px-7 py-2">{children}</div>
+                  <div className="px-7 py-2 h-full">{children}</div>
                 </ScrollArea>
               </Card>
             </main>
