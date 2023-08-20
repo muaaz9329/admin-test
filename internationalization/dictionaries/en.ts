@@ -7,6 +7,7 @@ export default {
     login: "Login",
   },
   dashboard: {
+    headerTitle: "Administration",
     sidebar: {
       categories: "Categories",
       subcategories: "Subcategories",

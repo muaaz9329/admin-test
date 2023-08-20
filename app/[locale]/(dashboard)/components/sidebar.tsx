@@ -102,7 +102,10 @@ export const DashboardSidebar = () => {
 
       <Separator className="bg-gray/40 mt-auto mb-3" />
 
-      <Button variant="ghost" className="flex items-center gap-3 self-start">
+      <Button
+        variant="ghost"
+        className=" px-4 flex items-center gap-3 self-start"
+      >
         <LogOut className="w-6 h-6" />
         <span>{scopedT("logout")}</span>
       </Button>
