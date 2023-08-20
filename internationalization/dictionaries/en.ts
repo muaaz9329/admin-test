@@ -23,13 +23,20 @@ export default {
     },
   },
   intervals: {
-    // like 5/10/15/... seconds/minutes
-    "seconds#other": "{count} seconds",
-    "minutes#other": "{count} minutes",
-    "hours#other": "{count} hours",
-    "days#other": "{count} days",
-    "weeks#other": "{count} weeks",
-    "months#other": "{count} months",
-    "years#other": "{count} years",
+    "seconds#other": "{count} שניות",
+    "minutes#other": "{count} דקות",
+    "hours#other": "{count} שעות",
+    "days#other": "{count} ימים",
+    "weeks#other": "{count} שבועות",
+    "months#other": "{count} חודשים",
+    "years#other": "{count} שנים",
+  },
+  actions: {
+    search: "Search",
+    addFile: "Add File",
+    done: "Done",
+    cancel: "Cancel",
+    addAField: "Add a field",
+    delete: "Delete",
   },
 } as const;
