@@ -20,18 +20,35 @@ export default {
       detailForm: "טופס פירוט",
       popupNews: "חדשות קופצות",
       logout: "להתנתק",
-      
     },
   },
-  pages:{
-    newsPopup:{
-      form:"טופס קופץ חדשות",
-      video:"וִידֵאוֹ",
-      image:"תמונה",
-      uploadVideo:" +  הוסף וידאו",
-      uploadImage:" +   להוסיף תמונה",
-      Text:"טקסט",
-      Done:"אישור",
-    }
-  }
+  pages: {
+    newsPopup: {
+      formTitle: "טופס קופץ חדשות",
+    },
+  },
+  intervals: {
+    "seconds#other": "{count} שניות",
+    "minutes#other": "{count} דקות",
+    "hours#other": "{count} שעות",
+    "days#other": "{count} ימים",
+    "weeks#other": "{count} שבועות",
+    "months#other": "{count} חודשים",
+    "years#other": "{count} שנים",
+  },
+  actions: {
+    search: "לחפש",
+    addFile: "הוסף קובץ",
+    done: "אישור",
+    cancel: "לְבַטֵל",
+    addAField: "הוסף שדה",
+    delete: "לִמְחוֹק",
+    uploadImage: "העלה תמונה",
+    uploadVideo: "העלה וידאו",
+  },
+  words: {
+    image: "תמונה",
+    video: "וידאו",
+    text: "טקסט",
+  },
 } as const;

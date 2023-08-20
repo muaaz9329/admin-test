@@ -1,27 +1,27 @@
 "use client";
+import React from "react";
+import { Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useScopedI18n } from "@/internationalization/client";
-import { Check } from "lucide-react";
-import React from "react";
+import { useI18n } from "@/internationalization/client";
 
-type Props = {};
-
-export default function Page({}: Props) {
-  const scopedT = useScopedI18n("pages.newsPopup");
+export default function Page() {
+  const t = useI18n();
 
   return (
     <div>
-      <text className="font-normal text-md">{scopedT("form")} :</text>
+      <text className="font-normal text-md">
+        {t("pages.newsPopup.formTitle")} :
+      </text>
       <div className="mr-[94px] mt-[35px] ">
         <div className=" flex flex-row">
           <div className="flex flex-row content-start mx-4">
-            <text className="text-lg">{scopedT("video")} :</text>
+            <text className="text-lg">{t("words.video")} :</text>
             <label htmlFor="VideoInput">
               <div className="w-[calc(30vw-8rem)] h-[calc(35vh-6rem)] cursor-pointer border-2 border-primary mr-10 rounded-2xl flex flex-row justify-center items-center">
                 <text className=" font-normal text-2xl text-[#7B7B7B]">
                   {" "}
-                  {scopedT("uploadVideo")}
+                  {t("actions.uploadVideo")}
                 </text>
                 <input
                   type="file"
@@ -33,12 +33,12 @@ export default function Page({}: Props) {
             </label>
           </div>
           <div className="flex flex-row content-start mx-4">
-            <text className="text-lg">{scopedT("image")} :</text>
+            <text className="text-lg">{t("words.image")} :</text>
             <label htmlFor="PictureInput">
               <div className="w-[calc(30vw-8rem)] h-[calc(35vh-6rem)] cursor-pointer border-2 border-primary mr-10 rounded-2xl flex flex-row justify-center items-center">
                 <text className=" font-normal text-2xl text-[#7B7B7B]">
                   {" "}
-                  {scopedT("uploadImage")}
+                  {t("actions.uploadImage")}
                 </text>
                 <input
                   type="file"
@@ -52,7 +52,7 @@ export default function Page({}: Props) {
         </div>
         <div className="mt-8">
           <div className="flex flex-row content-start ml-12">
-            <text className="text-lg">{scopedT("Text")} :</text>
+            <text className="text-lg">{t("words.text")} :</text>
 
             <textarea
               className="w-[calc(50vw-8rem)] h-[calc(43vh-6rem)] pt-4 border-2 border-primary mr-10 rounded-2xl pr-4"
@@ -64,7 +64,7 @@ export default function Page({}: Props) {
         </div>
         <div className="mt-4" dir="ltr">
           <Button size={"lg"}>
-            {scopedT("Done")}
+            {t("actions.done")}
             <Check className="w-5 h-5 ml-1" />
           </Button>
         </div>
