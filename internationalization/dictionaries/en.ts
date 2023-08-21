@@ -53,6 +53,7 @@ export default {
     addFile: "Add File",
     done: "Done",
     cancel: "Cancel",
+    edit: "Edit",
     addAField: "Add a field",
     delete: "Delete",
     uploadImage: "Upload Image",
