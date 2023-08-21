@@ -9,7 +9,7 @@ import { Loader } from "@/components/ui/loader";
 import { NavLink } from "@/components/ui/nav-link";
 import { Separator } from "@/components/ui/separator";
 import { useI18n } from "@/internationalization/client";
-import { firestore } from "@/lib/firebase/firebase-config";
+import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
 import {
   DocumentData,
   collection,
@@ -17,8 +17,10 @@ import {
   doc,
   onSnapshot,
 } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function PopupNews() {
   const t = useI18n();
@@ -118,8 +120,29 @@ export default function PopupNews() {
             id: "",
           })
         }
-        onConfirm={() => {
-          deleteDoc(doc(firestore, "news", deleteAlert.id));
+        onConfirm={async () => {
+          const newsImageRef = ref(
+            fireStorage,
+            "news/" + deleteAlert.id + "-image"
+          );
+          const newsVideoRef = ref(
+            fireStorage,
+            "news/" + deleteAlert.id + "-video"
+          );
+
+          try {
+            await deleteObject(newsImageRef);
+            console.log("news image deleted");
+
+            await deleteObject(newsVideoRef);
+            console.log("news video deleted");
+
+            await deleteDoc(doc(firestore, "news", deleteAlert.id));
+          } catch (error) {
+            console.log(error);
+            // toast.error(t("pages.newsPopup.deleteError"));
+            toast.error("There was an error deleting the news");
+          }
         }}
       />
     </div>

@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { ONE_MB } from "./sizes";
 
+export const DEFAULT_IMAGE_MAX_SIZE = 2 * ONE_MB;
+export const DEFAULT_VIDEO_MAX_SIZE = 5 * ONE_MB;
+
 export const DEFAULT_ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/png",
@@ -21,7 +24,7 @@ export const DEFAULT_ACCEPTED_VIDEO_TYPES = [
  */
 export const imageSchema = ({
   isRequired = false,
-  maxSize: MAX_FILE_SIZE = 2 * ONE_MB,
+  maxSize: MAX_FILE_SIZE = DEFAULT_IMAGE_MAX_SIZE,
   acceptedTypes: ACCEPTED_IMAGE_TYPES = DEFAULT_ACCEPTED_IMAGE_TYPES,
 }: {
   isRequired?: boolean;
@@ -53,7 +56,7 @@ export const imageSchema = ({
  */
 export const videoSchema = ({
   isRequired = false,
-  maxSize: MAX_FILE_SIZE = 5 * ONE_MB,
+  maxSize: MAX_FILE_SIZE = DEFAULT_VIDEO_MAX_SIZE,
   acceptedTypes: ACCEPTED_VIDEO_TYPES = DEFAULT_ACCEPTED_VIDEO_TYPES,
 }: {
   isRequired?: boolean;
