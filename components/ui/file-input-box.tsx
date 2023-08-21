@@ -25,7 +25,7 @@ export const FileInputBox = React.forwardRef<
   return (
     <label htmlFor={id}>
       <div className="space-y-2">
-        <div className="h-48 w-72 rounded-md border-primary border-2 flex items-center justify-center">
+        <div className="h-48 w-72 overflow-hidden rounded-md border-primary border-2 flex items-center justify-center">
           {(!fieldProps.value || !fieldProps.value.name) && (
             <span className="text-placeholder font-medium text-md">
               + {fileType === "image" ? t("words.image") : t("words.video")}

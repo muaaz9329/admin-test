@@ -18,7 +18,7 @@ import { FileInputBox } from "@/components/ui/file-input-box";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-type NewsPopupFormProps = {
+type PopupNewsFormProps = {
   /* a header component to render above the form. Excluded from the form and not in the className implementation */
   header?: React.ReactNode;
 
@@ -29,10 +29,10 @@ type NewsPopupFormProps = {
   className?: string;
 
   /* a function to call when the form is submitted */
-  onSubmit: (values: NewsPopupFormState) => void;
+  onSubmit: (values: PopupNewsFormState) => void;
 
   /* the initial values of the form */
-  initialValues?: NewsPopupFormState;
+  initialValues?: PopupNewsFormState;
 };
 
 const formSchema = z.object({
@@ -43,9 +43,9 @@ const formSchema = z.object({
   newsVideo: videoSchema({ isRequired: true }),
 });
 
-export type NewsPopupFormState = z.infer<typeof formSchema>;
+export type PopupNewsFormState = z.infer<typeof formSchema>;
 
-const INITIAL_VALUES: NewsPopupFormState = {
+const INITIAL_VALUES: PopupNewsFormState = {
   newsContent: "",
   // newsImage is of type FileList so we can use the FileList type to initialize it
   newsImage: new File([], ""),
@@ -55,16 +55,16 @@ const INITIAL_VALUES: NewsPopupFormState = {
 /*
     News Popup Form:
 */
-export default function NewsPopupForm({
+export default function PopupNewsForm({
   header,
   footer,
   onSubmit,
   className = "",
   initialValues = INITIAL_VALUES,
-}: NewsPopupFormProps) {
+}: PopupNewsFormProps) {
   const t = useI18n();
 
-  const form = useForm<NewsPopupFormState>({
+  const form = useForm<PopupNewsFormState>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
   });
