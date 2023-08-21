@@ -29,6 +29,10 @@ export default {
       addNews: "הוסף חדשות",
       noNews: "לא נוספו חדשות",
     },
+    homeSlider: {
+      imageSlider: "סליידר תמונה",
+      refreshInterval: "מרווח רענון",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",

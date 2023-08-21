@@ -41,6 +41,10 @@ export default {
       addNews: "Add News",
       noNews: "No News Added",
     },
+    homeSlider: {
+      imageSlider: "Image Slider",
+      refreshInterval: "Refresh Interval",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
