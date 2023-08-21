@@ -75,7 +75,7 @@ export const DashboardSidebar = () => {
     },
     {
       name: scopedT("popupNews"),
-      href: `/news-popup`,
+      href: `/popup-news`,
       icon: Newspaper,
     },
   ];
