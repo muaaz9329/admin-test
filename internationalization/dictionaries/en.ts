@@ -36,7 +36,10 @@ export default {
   },
   pages: {
     newsPopup: {
-      formTitle: "News pop-up form",
+      popupNewsTitle: "Popup News",
+      formTitle: "Popup News form",
+      addNews: "Add News",
+      noNews: "No News Added",
     },
   },
   intervals: {
@@ -50,13 +53,19 @@ export default {
   },
   actions: {
     search: "Search",
-    addFile: "Add File",
     done: "Done",
     cancel: "Cancel",
-    addAField: "Add a field",
+    confirm: "Confirm",
+    edit: "Edit",
     delete: "Delete",
+    addFile: "Add File",
+    addAField: "Add a field",
     uploadImage: "Upload Image",
     uploadVideo: "Upload Video",
+  },
+  messages: {
+    areYouSure: "Are you sure?",
+    cantUndo: "You can't undo this action",
   },
   words: {
     text: "Text",

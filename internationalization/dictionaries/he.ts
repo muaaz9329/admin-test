@@ -24,7 +24,10 @@ export default {
   },
   pages: {
     newsPopup: {
+      popupNewsTitle: "חדשות קופצות",
       formTitle: "טופס קופץ חדשות",
+      addNews: "הוסף חדשות",
+      noNews: "לא נוספו חדשות",
     },
   },
   intervals: {
@@ -41,10 +44,16 @@ export default {
     addFile: "הוסף קובץ",
     done: "אישור",
     cancel: "לְבַטֵל",
+    confirm: "לְאַשֵׁר",
+    edit: "לַעֲרוֹך",
     addAField: "הוסף שדה",
     delete: "לִמְחוֹק",
     uploadImage: "העלה תמונה",
     uploadVideo: "העלה וידאו",
+  },
+  messages: {
+    areYouSure: "האם אתה בטוח?",
+    cantUndo: "אתה לא יכול לבטל פעולה זו",
   },
   words: {
     image: "תמונה",
