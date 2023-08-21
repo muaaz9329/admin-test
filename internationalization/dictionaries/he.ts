@@ -41,6 +41,7 @@ export default {
     addFile: "הוסף קובץ",
     done: "אישור",
     cancel: "לְבַטֵל",
+    edit: "לַעֲרוֹך",
     addAField: "הוסף שדה",
     delete: "לִמְחוֹק",
     uploadImage: "העלה תמונה",
