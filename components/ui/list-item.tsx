@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+
 type ListItemProps = {
   children: React.ReactNode;
   className?: string;
@@ -17,7 +19,11 @@ export const ListItem: React.FC<ListItemProps> = ({
   return (
     // @ts-ignore
     <Component
-      className={`rounded-md border-2 border-primary py-4 px-8 flex items-center justify-between ${className}`}
+      className={cn(
+        `shadow rounded-md border-2 border-primary py-4 px-8 flex items-center justify-between gap-4`,
+        typeof onClick === "function" && "cursor-pointer",
+        className
+      )}
       onClick={() => onClick?.()}
       {...props}
     >
