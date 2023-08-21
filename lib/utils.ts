@@ -7,8 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getEnvVar(name: string) {
   // if unknown env var, throw error
-  if (!process.env[name]) {
+  if (!process.env[`NEXT_PUBLIC_${name}`]) {
     throw new Error(`Environment variable ${name} is missing`);
   }
-  return process.env[`process.env.NEXT_PUBLIC_${name}`];
+  return process.env[`NEXT_PUBLIC_${name}`];
 }

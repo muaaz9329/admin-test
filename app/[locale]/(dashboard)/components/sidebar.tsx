@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/ui/nav-link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useAuthContext } from "@/contexts/auth-context";
 import { useLayoutConfig } from "@/hooks/use-layout-config";
 import { useScopedI18n } from "@/internationalization/client";
 import {
@@ -23,6 +24,8 @@ import Image from "next/image";
 
 export const DashboardSidebar = () => {
   const scopedT = useScopedI18n("dashboard.sidebar");
+
+  const { signOutUser } = useAuthContext();
 
   const sidebarItems = [
     {
@@ -116,6 +119,7 @@ export const DashboardSidebar = () => {
 
       <Button
         variant="ghost"
+        onClick={signOutUser}
         className=" px-4 flex items-center gap-3 self-start"
       >
         <LogOut className="w-6 h-6" />

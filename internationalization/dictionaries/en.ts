@@ -5,6 +5,18 @@ export default {
     email: "Email",
     password: "Password",
     login: "Login",
+
+    errorMessages: {
+      "auth/user-not-found": "User not found",
+      "auth/wrong-password": "Wrong password",
+      "auth/too-many-requests": "Too many requests",
+      "auth/network-request-failed": "Network request failed",
+      "auth/invalid-email": "Invalid email",
+      "auth/email-already-in-use": "Email already in use",
+      "auth/weak-password": "Weak password",
+      "auth/operation-not-allowed": "Operation not allowed",
+      "auth/internal-error": "Internal error",
+    },
   },
   dashboard: {
     headerTitle: "Administration",

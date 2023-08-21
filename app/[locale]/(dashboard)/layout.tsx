@@ -1,3 +1,7 @@
+"use client";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/contexts/auth-context";
+
 import { Card } from "@/components/ui/card";
 import { DashboardHeader } from "./components/header";
 import { DashboardSidebar } from "./components/sidebar";
@@ -13,6 +17,14 @@ export default function DashboardRootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { isLoggedIn } = useAuthContext();
+
+  if (!isLoggedIn) {
+    router.push("/login");
+    return <></>;
+  }
+
   return (
     <>
       <div className="flex h-screen max-h-screen">
