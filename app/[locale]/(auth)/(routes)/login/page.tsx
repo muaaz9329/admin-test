@@ -16,6 +16,12 @@ import { InputWithIcon } from "@/components/ui/input-with-icon";
 import { Mail, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScopedI18n } from "@/internationalization/client";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { fireAuth } from "@/lib/firebase/firebase-config";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
+import { useAuthContext } from "@/contexts/auth-context";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -26,6 +32,11 @@ type FormSchema = z.infer<typeof formSchema>;
 
 function LoginPage() {
   const t = useScopedI18n("auth");
+  const router = useRouter();
+  const { authLoading, isLoggedIn, authError } = useAuthContext();
+
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(fireAuth);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -35,9 +46,23 @@ function LoginPage() {
     },
   });
 
-  const onSubmit = async (values: FormSchema) => {
-    console.log(values);
-  };
+  useEffect(() => {
+    toast.dismiss();
+
+    if (authError) {
+      console.log({ authError });
+      toast.error(authError.message);
+    }
+
+    if (authLoading) {
+      toast.loading("Signing you in...");
+    }
+
+    if (isLoggedIn) {
+      toast.success("You are signed in!");
+      router.push("/");
+    }
+  }, [authError, authLoading, isLoggedIn, router]);
 
   return (
     <Card className="w-[450px] rounded-2xl">
@@ -46,7 +71,14 @@ function LoginPage() {
       </CardHeader>
       <CardContent className="pb-12">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+          <form
+            onSubmit={form.handleSubmit(
+              // this function should be separated if exceeds 1 line
+              (values) =>
+                signInWithEmailAndPassword(values.email, values.password)
+            )}
+            className="space-y-10"
+          >
             <FormField
               control={form.control}
               name="email"
@@ -72,6 +104,7 @@ function LoginPage() {
                   <FormControl>
                     <InputWithIcon
                       {...field}
+                      type="password"
                       placeholder={t("password")}
                       icon={<Unlock width="21" />}
                     />
@@ -82,7 +115,7 @@ function LoginPage() {
             />
 
             <div className="text-center">
-              <Button>{t("login")}</Button>
+              <Button disabled={loading}>{t("login")}</Button>
             </div>
           </form>
         </Form>
