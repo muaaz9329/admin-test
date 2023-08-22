@@ -33,6 +33,10 @@ export default {
       imageSlider: "סליידר תמונה",
       refreshInterval: "מרווח רענון",
     },
+    dailyStudies: {
+      formTitle: "טופס לימודים יומיים",
+      studyContent: "תוכן לימוד",
+    },
     settingsForm: {
       settingsFormTitle: "טופס הגדרות",
       adminLogo: "לוגו מנהל מערכת",
@@ -57,6 +61,7 @@ export default {
     confirm: "לְאַשֵׁר",
     edit: "לַעֲרוֹך",
     addAField: "הוסף שדה",
+    addCover: "הוסף כיסוי",
     delete: "לִמְחוֹק",
     uploadImage: "העלה תמונה",
     uploadVideo: "העלה וידאו",
@@ -69,5 +74,11 @@ export default {
     image: "תמונה",
     video: "וידאו",
     text: "טקסט",
+    file: "קובץ",
+    serialNo: "לא.",
+    title: "כותרת",
+    fileName: "שם הקובץ",
+    description: "תיאור",
+    dailyStudies: "לימודים יומיים",
   },
 } as const;
