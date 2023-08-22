@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -19,8 +19,11 @@ export default function Page() {
   const t = useI18n();
   const router = useRouter();
 
+  const [isUploading, setIsUploading] = React.useState(false);
+
   const onNewsSubmission = async (values: PopupNewsFormState) => {
     const loadingToastId = toast.loading("Adding news...");
+    setIsUploading(true);
 
     /*
     We'll first add a document to news collection and keep image and video fields empty.
@@ -114,6 +117,8 @@ export default function Page() {
         });
       } catch (error) {
         console.log({ error });
+
+        setIsUploading(false);
         toast.dismiss(loadingToastId);
         toast.error("News cannot be added. Error while uploading image.");
         // delete the document from news collection
@@ -132,6 +137,8 @@ export default function Page() {
           video: downloadURL,
         });
       } catch (error) {
+        setIsUploading(false);
+
         console.log({ error });
         toast.dismiss(loadingToastId);
         toast.error("News cannot be added. Error while uploading video.");
@@ -142,9 +149,16 @@ export default function Page() {
       }
 
       // if everything is successful, dismiss the loading toast and show success toast
+      setIsUploading(false);
+
       toast.dismiss(loadingToastId);
       toast.success("News added successfully");
+
+      // redirect to news page
+      router.back();
     } catch (error) {
+      setIsUploading(false);
+
       console.log({ error });
       toast.dismiss(loadingToastId);
       toast.error("Error adding news");
@@ -167,6 +181,7 @@ export default function Page() {
                 size={"lg"}
                 variant="outline"
                 type="reset"
+                disabled={isUploading}
                 onClick={() => {
                   router.back();
                 }}
@@ -175,7 +190,7 @@ export default function Page() {
                 {t("actions.cancel")}
               </Button>
 
-              <Button size={"lg"} type="submit">
+              <Button size={"lg"} type="submit" disabled={isUploading}>
                 <Check className="w-5 h-5 ml-1" />
                 {t("actions.done")}
               </Button>
