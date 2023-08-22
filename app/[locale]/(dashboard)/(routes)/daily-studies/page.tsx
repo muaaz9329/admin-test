@@ -20,9 +20,8 @@ import { Loader } from "@/components/ui/loader";
 import { Alert } from "@/components/ui/alert";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
-type Props = {};
 
-const page = (props: Props) => {
+export default function Page() {
   const [studies, setStudies] = useState<{
     state: RequestState;
     data: DocumentData[];
@@ -71,12 +70,12 @@ const page = (props: Props) => {
       {studies.state === "loading" ? (
         <Loader />
       ) : studies.data.length === 0 ? (
-        <Alert>No studies Found</Alert>
+        <Alert>No daily studies content found</Alert>
       ) : (
         <div>
           {studies.data.map((data,index) => {
             return (
-              <ListItem className="  mt-4 rounded-lg">
+              <ListItem className="mt-4 rounded-lg">
                 <span>{index+1}</span>
                 <span>{data.name}</span>
                 <ActionsDropdown
@@ -115,7 +114,7 @@ const page = (props: Props) => {
 
           try {
             await deleteObject(studiesImageRef);
-            console.log("news image deleted");
+            console.log("studies image deleted");
 
             // await deleteObject(newsVideoRef);
             // console.log("news video deleted");
@@ -124,7 +123,7 @@ const page = (props: Props) => {
           } catch (error) {
             console.log(error);
             // toast.error(t("pages.newsPopup.deleteError"));
-            toast.error("There was an error deleting the news");
+            toast.error("There was an error deleting this file");
           }
         }}
       />
