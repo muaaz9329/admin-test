@@ -37,6 +37,10 @@ export default {
       formTitle: "טופס לימודים יומיים",
       studyContent: "תוכן לימוד",
     },
+    settingsForm: {
+      settingsFormTitle: "טופס הגדרות",
+      adminLogo: "לוגו מנהל מערכת",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -51,6 +55,8 @@ export default {
     search: "לחפש",
     addFile: "הוסף קובץ",
     done: "אישור",
+    change: "לְשַׁנוֹת",
+    save: "להציל",
     cancel: "לְבַטֵל",
     confirm: "לְאַשֵׁר",
     edit: "לַעֲרוֹך",

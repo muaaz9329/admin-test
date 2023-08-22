@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/auth-context";
 import { useLayoutConfig } from "@/hooks/use-layout-config";
 import { useScopedI18n } from "@/internationalization/client";
+import { firestore } from "@/lib/firebase/firebase-config";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import {
   Banknote,
   BookOpen,
@@ -21,11 +23,14 @@ import {
   UserCheck,
 } from "lucide-react";
 import Image from "next/image";
+import React from "react";
 
 export const DashboardSidebar = () => {
-  const scopedT = useScopedI18n("dashboard.sidebar");
-
   const { signOutUser } = useAuthContext();
+  const scopedT = useScopedI18n("dashboard.sidebar");
+  const settingsDoc = doc(firestore, "appconfig", "panel-settings");
+
+  const [logoUrl, setLogoUrl] = React.useState<string | undefined>(undefined);
 
   const sidebarItems = [
     {
@@ -80,13 +85,24 @@ export const DashboardSidebar = () => {
     },
   ];
 
+  React.useEffect(() => {
+    const unsub = onSnapshot(settingsDoc, (doc) => {
+      const data = doc.data();
+      if (data) {
+        setLogoUrl(data.adminLogo);
+      }
+    });
+
+    return () => unsub();
+  }, []);
+
   return (
     <aside className="flex flex-col shrink-0 basis-60 grow-0 h-screen pb-2 bg-primary">
       <div className="flex gap-4 items-center px-4 pt-2 h-20">
         <Image
           width="70"
           height="70"
-          src="/images/dummy-admin.png"
+          src={logoUrl || "/images/admin-logo.png"}
           alt="Admin Image"
           className="rounded-full"
         />
