@@ -9,14 +9,16 @@ import { useRouter } from 'next/navigation'
 import { Check, X } from 'lucide-react'
 import toast from 'react-hot-toast';
 
-type Props = {}
 
-function page({}: Props) {
+export default function Page() {
     const [isUploading, setIsUploading] = React.useState(false);
+        const router = useRouter()
+
 
 
    const onStudySubmission = async (values: DailyStudiesFormState) => {
     const loadingToastId = toast.loading("Adding Studies...");
+       
     setIsUploading(true);
      /*
     We'll first add a document to daily-studies collection and keep image and pdfFile fields empty.
@@ -33,7 +35,7 @@ function page({}: Props) {
     try{
         // adding new Doc
 
-        const StudyDoc = await addDoc(dailyStudiesCollection , {
+        const studyDoc = await addDoc(dailyStudiesCollection , {
             name: values.fileName,
             coverImage:'',
             pdfLink:'',
@@ -41,14 +43,14 @@ function page({}: Props) {
             timeToRead:values.timeToRead,
         })
 
-        const imageRef = ref(folderRef, `${StudyDoc.id}-image`);
+        const imageRef = ref(folderRef, `${studyDoc.id}-image`);
         // const pdfRef = ref(folderRef, `${newDoc.id}-pdf`); TODO: add pdf upload
 
         try{
             await uploadBytes(imageRef, values.coverImage)
             console.log('image uploaded')
             const downloadUrl = await getDownloadURL(imageRef)
-            await updateDoc(StudyDoc,{
+            await updateDoc(studyDoc,{
                 coverImage:downloadUrl
             });
         }
@@ -58,7 +60,7 @@ function page({}: Props) {
         toast.dismiss(loadingToastId);
         toast.error("An error occurred while adding daily Studies. Please try again later.");
         // delete the document from news collection
-        deleteDoc(StudyDoc);
+        deleteDoc(studyDoc);
         return;
 
         }
@@ -66,7 +68,7 @@ function page({}: Props) {
         setIsUploading(false);
 
       toast.dismiss(loadingToastId);
-      toast.success("News added successfully");
+      toast.success("Daily studies added successfully");
 
       // redirect to news page
       router.back();
@@ -76,11 +78,10 @@ function page({}: Props) {
 
       console.log({ error });
       toast.dismiss(loadingToastId);
-      toast.error("Error adding news");
+      toast.error("Error adding daily study");
     }
 
    }
-    const router = useRouter()
   return (
     <DailyStudiesForm
     onSubmit={onStudySubmission}
@@ -114,4 +115,3 @@ function page({}: Props) {
   )
 }
 
-export default page
