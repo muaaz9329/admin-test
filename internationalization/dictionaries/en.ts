@@ -45,6 +45,10 @@ export default {
       imageSlider: "Image Slider",
       refreshInterval: "Refresh Interval",
     },
+    settingsForm: {
+      settingsFormTitle: "Settings Form",
+      adminLogo: "Administrator Logo",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -60,6 +64,8 @@ export default {
     done: "Done",
     cancel: "Cancel",
     confirm: "Confirm",
+    change: "Change",
+    save: "Save",
     edit: "Edit",
     delete: "Delete",
     addFile: "Add File",
