@@ -11,14 +11,13 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
-import { imageSchema } from "@/constants/general-schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileInputBox } from "@/components/ui/file-input-box";
+import { useI18n } from "@/internationalization/client";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { DropdownMenuContent, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-type dailyStudiesFormPorps = {
+
+type dailyStudiesFormProps = {
   footer: React.ReactNode;
 
   /* a className to apply to the form */
@@ -41,7 +40,7 @@ const formSchema = z.object({
 
 export type DailyStudiesFormState = z.infer<typeof formSchema>;
 
-const INTIAL_VALUES: DailyStudiesFormState = {
+const INITIAL_VALUES: DailyStudiesFormState = {
   studyContent: "",
   pdf: new File([], ""),
   coverImage: new File([], ""),
@@ -53,8 +52,10 @@ const DailyStudiesForm = ({
   footer,
   onSubmit,
   className = "",
-  initialValues = INTIAL_VALUES,
-}: dailyStudiesFormPorps) => {
+  initialValues = INITIAL_VALUES,
+}: dailyStudiesFormProps) => {
+  const t = useI18n();
+
   const form = useForm<DailyStudiesFormState>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
@@ -64,56 +65,79 @@ const DailyStudiesForm = ({
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex flex-row justify-between my-10">
-                <FormLabel>
-                Daily studies form
-                </FormLabel>
-                <div className="flex flex-row">
-                    
-                    
-                </div>
+          <div className="space-y-8">
+            <div className="flex justify-between">
+              <FormLabel>{t("pages.dailyStudies.formTitle")}</FormLabel>
+
+              {/* select here */}
             </div>
-          <div className=" flex flex-row gap-x-5 w-[calc(55vw-8rem)]">
-            <FormLabel>Study content:</FormLabel>
+
+            {/* <div className=" flex flex-row gap-x-5 w-[calc(55vw-8rem)]">
+          <FormLabel>
+              {t("pages.dailyStudies.studyContent")}
+            </FormLabel>
             <Textarea
               {...form.register("studyContent")}
               className="h-[calc(50vh-8rem)]"
             />
-          </div>
-          <div>
-            <div className=" flex flex-row mt-10 gap-x-8 w-[calc(30vw-8rem)">
-              <FormLabel>File name :</FormLabel>
-              <input
-                className="flex h-12  rounded-md shadow-sm border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-placeholder focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[calc(30vw-8rem)"
-                type="text"
-                {...form.register("fileName")}
-              />
-            </div>
-            <div>
-              <div className="mt-5 gap-x-5">
-                <FormField
-                  control={form.control}
-                  name="coverImage"
-                  render={({ field }) => (
-                    <FormItem className="space-y-0 flex gap-2">
-                      <FormLabel>Add cover: </FormLabel>
-                      <div className="space-y-5 mr-5">
-                        <FormControl>
-                          <FileInputBox fileType="image" {...field} />
-                        </FormControl>
+          </div> */}
 
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="studyContent"
+              render={({ field }) => (
+                <FormItem className="flex gap-4 space-y-0">
+                  <FormLabel>{t("pages.dailyStudies.studyContent")}:</FormLabel>
+                  <div className="flex-col gap-2">
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        cols={80}
+                        rows={10}
+                        placeholder="Enter your study content here"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="fileName"
+              render={({ field }) => (
+                <FormItem className="flex gap-4 space-y-0">
+                  <FormLabel>{t("words.fileName")}:</FormLabel>
+                  <div className="flex-col gap-2">
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="coverImage"
+              render={({ field }) => (
+                <FormItem className="space-y-0 flex gap-2">
+                  <FormLabel>{t("actions.addCover")}:</FormLabel>
+                  <div className="space-y-5">
+                    <FormControl>
+                      <FileInputBox fileType="image" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+            {footer && footer}
           </div>
-          <div></div>
-          {footer && footer}
         </form>
-        
       </Form>
     </div>
   );

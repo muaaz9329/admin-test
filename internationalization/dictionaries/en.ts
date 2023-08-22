@@ -45,6 +45,10 @@ export default {
       imageSlider: "Image Slider",
       refreshInterval: "Refresh Interval",
     },
+    dailyStudies: {
+      formTitle: "Daily Studies Form",
+      studyContent: "Study Content",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -64,6 +68,7 @@ export default {
     delete: "Delete",
     addFile: "Add File",
     addAField: "Add a field",
+    addCover: "Add Cover",
     uploadImage: "Upload Image",
     uploadVideo: "Upload Video",
   },
@@ -75,5 +80,11 @@ export default {
     text: "Text",
     video: "Video",
     image: "Image",
+    file: "File",
+    title: "Title",
+    description: "Description",
+    serialNo: "Sr #",
+    dailyStudies: "Daily Studies",
+    fileName: "File Name",
   },
 } as const;
