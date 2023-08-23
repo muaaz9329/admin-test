@@ -4,7 +4,7 @@ import DailyStudiesForm, {
   DailyStudiesFormState,
 } from "../components/daily-studies-form";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -22,87 +22,68 @@ export default function Page() {
 
   const onUpdateStudy = async (values: DailyStudiesFormState) => {
     const loadingToastId = toast.loading("Adding Studies...");
+    setIsUploading(true);
 
-    console.log("formvalues", { values });
+    const studyDoc = doc(firestore, "daily-studies", editingDoc?.id!);
+    const coverImgRef = ref(fireStorage, `${editingDoc?.id}-image`);
+    const pdfRef = ref(fireStorage, `${editingDoc?.id}-pdf`);
 
-    // setIsUploading(true);
-    /*
-    We'll first add a document to daily-studies collection and keep image and pdfFile fields empty.
-    Then we'll update image and pdfFile to cloud storage folder news with the document id as name like docid-image, docid-pdf
-    Then we'll update the document with the image and pdf urls.
+    console.log({ values });
 
-    If an error occurs during news addition, we'll delete the document from news collection and delete the image and video from storage.
-    */
+    try {
+      let newCoverSrc, newPdfSrc;
 
-    // const folderRef = ref(fireStorage, "daily-studies");
+      if (values.coverImage) {
+        try {
+          await uploadBytes(coverImgRef, values.coverImage);
+          newCoverSrc = await getDownloadURL(coverImgRef);
+        } catch (error) {
+          console.log({ error });
 
-    // const dailyStudiesCollection = collection(firestore, "daily-studies");
+          toast.dismiss(loadingToastId);
+          toast.error("Error uploading cover image");
+          return;
+        }
+      }
 
-    // try {
-    //   const studyFile = {
-    //     name: values.fileName,
-    //   };
+      if (values.pdf) {
+        try {
+          await uploadBytes(pdfRef, values.pdf);
+          newPdfSrc = await getDownloadURL(pdfRef);
+        } catch (error) {
+          console.log({ error });
 
-    //   if (values.contentType === "text") {
-    //     // @ts-ignore
-    //     studyFile["studyContent"] = values.studyContent;
-    //   }
+          toast.dismiss(loadingToastId);
+          toast.error("Error uploading pdf");
+          return;
+        }
+      }
 
-    //   // adding new Doc
-    //   const studyDoc = await addDoc(dailyStudiesCollection, studyFile);
+      const updatedDoc = {
+        name: values.fileName,
+        coverImage: newCoverSrc || editingDoc?.coverImage,
+        pdfLink: newPdfSrc || editingDoc?.pdfLink,
+        studyContent: values.studyContent,
+        contentType: values.contentType,
+        updatedAt: serverTimestamp(),
+      };
 
-    //   const coverImgRef = ref(folderRef, `${studyDoc.id}-image`);
-    //   const pdfRef = ref(folderRef, `${studyDoc.id}-pdf`);
+      console.log({
+        updatedDoc,
+        values,
+      });
 
-    //   try {
-    //     await uploadBytes(coverImgRef, values.coverImage);
-    //     console.log("study file cover image uploaded");
-    //     const fileCoverDownloadUrl = await getDownloadURL(coverImgRef);
+      await updateDoc(studyDoc, updatedDoc);
 
-    //     let filePdfDownloadUrl;
+      toast.dismiss(loadingToastId);
+      toast.success("Daily study updated successfully");
+      router.back();
+    } catch (error) {
+      console.log({ error });
 
-    //     if (values.contentType === "pdf") {
-    //       await uploadBytes(pdfRef, values.pdf!);
-    //       console.log("study file pdf uploaded");
-
-    //       filePdfDownloadUrl = await getDownloadURL(pdfRef);
-    //     }
-
-    //     // updating the document
-    //     const updatedDoc = {
-    //       coverImage: fileCoverDownloadUrl,
-    //       ...(values.contentType === "pdf"
-    //         ? { pdfFile: filePdfDownloadUrl }
-    //         : {}),
-    //     };
-
-    //     await updateDoc(studyDoc, updatedDoc);
-    //   } catch (error) {
-    //     console.log(error);
-    //     setIsUploading(false);
-    //     toast.dismiss(loadingToastId);
-    //     toast.error(
-    //       "An error occurred while adding daily studies. Please try again later."
-    //     );
-    //     // delete the document from news collection
-    //     deleteDoc(studyDoc);
-    //     return;
-    //   }
-
-    //   setIsUploading(false);
-
-    //   toast.dismiss(loadingToastId);
-    //   toast.success("Daily studies added successfully");
-
-    //   // redirect to news page
-    //   router.back();
-    // } catch (error) {
-    //   setIsUploading(false);
-
-    //   console.log({ error });
-    //   toast.dismiss(loadingToastId);
-    //   toast.error("Error adding daily study");
-    // }
+      toast.dismiss(loadingToastId);
+      toast.error("Error updating daily study");
+    }
   };
   return (
     <DailyStudiesForm

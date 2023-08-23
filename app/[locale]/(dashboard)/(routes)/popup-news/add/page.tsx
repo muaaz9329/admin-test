@@ -3,7 +3,13 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, deleteDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { toast } from "react-hot-toast";
 
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
@@ -45,6 +51,7 @@ export default function Page() {
         content: values.newsContent,
         image: "",
         video: "",
+        createdAt: serverTimestamp(),
       });
 
       // creating a reference to image and video in storage
@@ -114,6 +121,7 @@ export default function Page() {
         const downloadURL = await getDownloadURL(imageRef);
         await updateDoc(newsDoc, {
           image: downloadURL,
+          updatedAt: serverTimestamp(),
         });
       } catch (error) {
         console.log({ error });
@@ -135,6 +143,7 @@ export default function Page() {
         const downloadURL = await getDownloadURL(videoRef);
         await updateDoc(newsDoc, {
           video: downloadURL,
+          updatedAt: serverTimestamp(),
         });
       } catch (error) {
         setIsUploading(false);
