@@ -13,7 +13,7 @@ export interface FileInputBoxProps {
   fileType: "image" | "video" | "pdf";
   acceptedTypes?: string[];
   value: File | undefined;
-  fileSrc: string | undefined;
+  fileSrc?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
