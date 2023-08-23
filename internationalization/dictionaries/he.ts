@@ -56,6 +56,8 @@ export default {
     addFile: "הוסף קובץ",
     done: "אישור",
     change: "לְשַׁנוֹת",
+    upload: "לְהַעֲלוֹת",
+    choose: "לבחור",
     save: "להציל",
     cancel: "לְבַטֵל",
     confirm: "לְאַשֵׁר",

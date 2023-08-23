@@ -69,6 +69,8 @@ export default {
     cancel: "Cancel",
     confirm: "Confirm",
     change: "Change",
+    upload: "Upload",
+    choose: "Choose",
     save: "Save",
     edit: "Edit",
     delete: "Delete",

@@ -63,21 +63,21 @@ export default function Page() {
       fireStorage,
       "daily-studies/" + deleteAlert.id + "-image"
     );
-    //   const newsVideoRef = ref(
-    //     fireStorage,
-    //     "news/" + deleteAlert.id + "-video"
-    //   );
 
     try {
-      await deleteObject(studiesImageRef);
-      console.log("studies image deleted");
-
-      // await deleteObject(newsVideoRef);
-      // console.log("news video deleted");
+      try {
+        await deleteObject(studiesImageRef);
+        console.log("studies image deleted");
+      } catch (error: any) {
+        if (error.code === "storage/object-not-found") {
+          console.log("studies image not found. continuing...");
+        }
+      }
 
       await deleteDoc(doc(firestore, "daily-studies", deleteAlert.id));
     } catch (error) {
       console.log(error);
+
       // toast.error(t("pages.newsPopup.deleteError"));
       toast.error("There was an error deleting this file");
     }
