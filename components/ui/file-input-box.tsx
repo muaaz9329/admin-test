@@ -30,7 +30,7 @@ export const FileInputBox = React.forwardRef<
         {/* showing a box input with box preview for only image and video file inputs */}
         {["image", "video"].includes(fileType) && (
           <div className="h-48 w-72 overflow-hidden rounded-md border-primary border-2 flex items-center justify-center">
-            {(!value || !value.name) && (
+            {!value && !fileSrc && (
               <span className="text-placeholder font-medium text-md">
                 + {fileType === "image" ? t("words.image") : t("words.video")}
               </span>
@@ -70,9 +70,9 @@ export const FileInputBox = React.forwardRef<
             <a
               href={fileSrc}
               target="_blank"
-              className={buttonVariants({ variant: "link" })}
+              className="text-primary hover:underline"
             >
-              {fileSrc}
+              See previous uploaded file
             </a>
           ) : (
             ""

@@ -16,7 +16,12 @@ import {
 } from "@/constants/general-schemas";
 import { useI18n } from "@/internationalization/client";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import {
   deleteObject,
   getDownloadURL,
@@ -93,6 +98,7 @@ export default function HomeSlider() {
 
       await updateDoc(homeSliderDoc, {
         images: updatedImages,
+        updatedAt: serverTimestamp(),
       });
 
       setSelectedImageIndex(0);
@@ -146,6 +152,7 @@ export default function HomeSlider() {
         try {
           await updateDoc(homeSliderDoc, {
             images: updatedImages,
+            updatedAt: serverTimestamp(),
           });
 
           toast.dismiss(loadingToastId);

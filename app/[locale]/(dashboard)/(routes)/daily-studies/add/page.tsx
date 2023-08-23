@@ -4,7 +4,13 @@ import DailyStudiesForm, {
   DailyStudiesFormState,
 } from "../components/daily-studies-form";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, deleteDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -34,13 +40,15 @@ export default function Page() {
     const dailyStudiesCollection = collection(firestore, "daily-studies");
 
     try {
-      const studyFile = {
+      const studyFile: Partial<DailyStudyDocument> = {
         name: values.fileName,
+        contentType: values.contentType,
+        createdAt: serverTimestamp(),
       };
 
       if (values.contentType === "text") {
-        // @ts-ignore
         studyFile["studyContent"] = values.studyContent;
+        studyFile["pdfLink"] = "";
       }
 
       // adding new Doc
@@ -50,7 +58,7 @@ export default function Page() {
       const pdfRef = ref(folderRef, `${studyDoc.id}-pdf`);
 
       try {
-        await uploadBytes(coverImgRef, values.coverImage);
+        await uploadBytes(coverImgRef, values.coverImage!);
         console.log("study file cover image uploaded");
         const fileCoverDownloadUrl = await getDownloadURL(coverImgRef);
 
@@ -65,9 +73,10 @@ export default function Page() {
 
         // updating the document
         const updatedDoc = {
+          updatedAt: serverTimestamp(),
           coverImage: fileCoverDownloadUrl,
           ...(values.contentType === "pdf"
-            ? { pdfFile: filePdfDownloadUrl }
+            ? { pdfLink: filePdfDownloadUrl, studyContent: "" }
             : {}),
         };
 
@@ -76,9 +85,7 @@ export default function Page() {
         console.log(error);
         setIsUploading(false);
         toast.dismiss(loadingToastId);
-        toast.error(
-          "An error occurred while adding daily studies. Please try again later."
-        );
+        toast.error("Error adding daily study");
         // delete the document from news collection
         deleteDoc(studyDoc);
         return;
@@ -101,6 +108,8 @@ export default function Page() {
   };
   return (
     <DailyStudiesForm
+      action="add"
+      // @ts-ignore
       onSubmit={onStudySubmission}
       footer={
         <div className="mt-4 flex justify-between">

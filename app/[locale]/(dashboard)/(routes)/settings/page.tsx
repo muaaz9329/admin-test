@@ -8,7 +8,13 @@ import {
 import { ONE_MB } from "@/constants/sizes";
 import { useI18n } from "@/internationalization/client";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
-import { DocumentData, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import {
+  DocumentData,
+  doc,
+  onSnapshot,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -78,6 +84,7 @@ export default function Page() {
         // updating the logo url in firestore
         await updateDoc(settingsDoc, {
           adminLogo: downloadUrl,
+          updatedAt: serverTimestamp(),
         });
 
         toast.dismiss(loadingToastId);
