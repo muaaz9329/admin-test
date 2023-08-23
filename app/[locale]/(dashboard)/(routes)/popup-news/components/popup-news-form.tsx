@@ -13,9 +13,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { imageSchema, videoSchema } from "@/constants/general-schemas";
+import {
+  fileSchema,
+  DEFAULT_ACCEPTED_IMAGE_TYPES,
+  DEFAULT_ACCEPTED_VIDEO_TYPES,
+  DEFAULT_VIDEO_MAX_SIZE,
+} from "@/constants/general-schemas";
 import { FileInputBox } from "@/components/ui/file-input-box";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 type PopupNewsFormProps = {
@@ -37,10 +41,15 @@ type PopupNewsFormProps = {
 
 const formSchema = z.object({
   newsContent: z.string().nonempty(),
-  newsImage: imageSchema({
+  newsImage: fileSchema({
     isRequired: true,
+    acceptedTypes: DEFAULT_ACCEPTED_IMAGE_TYPES,
   }),
-  newsVideo: videoSchema({ isRequired: true }),
+  newsVideo: fileSchema({
+    isRequired: true,
+    acceptedTypes: DEFAULT_ACCEPTED_VIDEO_TYPES,
+    maxSize: DEFAULT_VIDEO_MAX_SIZE,
+  }),
 });
 
 export type PopupNewsFormState = z.infer<typeof formSchema>;

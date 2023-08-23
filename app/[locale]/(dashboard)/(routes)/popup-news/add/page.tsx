@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";

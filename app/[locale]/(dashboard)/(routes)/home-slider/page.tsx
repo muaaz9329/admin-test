@@ -94,6 +94,10 @@ export default function HomeSlider() {
       await updateDoc(homeSliderDoc, {
         images: updatedImages,
       });
+
+      setSelectedImageIndex(0);
+
+      toast.remove(loadingToastId);
     } catch (error) {
       console.log(error);
 

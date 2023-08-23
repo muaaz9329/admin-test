@@ -15,7 +15,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
-export default function SettingsPage() {
+export default function Page() {
   const t = useI18n();
 
   const [settings, setSettings] = useState<{
