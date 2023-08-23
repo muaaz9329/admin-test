@@ -1,13 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import {
-  DocumentData,
-  collection,
-  deleteDoc,
-  doc,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
@@ -21,13 +15,17 @@ import { ListItem } from "@/components/ui/list-item";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { useI18n } from "@/internationalization/client";
 import { Input } from "@/components/ui/input";
+import useDailyStudiesForm from "./components/hooks/use-daliy-studies-form";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const t = useI18n();
+  const router = useRouter();
+  const { setEditingDoc } = useDailyStudiesForm();
 
   const [studies, setStudies] = useState<{
     state: RequestState;
-    data: DocumentData[];
+    data: DailyStudyDocument[];
   }>({
     state: "loading",
     data: [],
@@ -42,10 +40,10 @@ export default function Page() {
     const unsubscribe = onSnapshot(
       collection(firestore, "daily-studies"),
       (snapshot) => {
-        const studyData: DocumentData[] = [];
+        const studyData: DailyStudyDocument[] = [];
 
         snapshot.forEach((doc) => {
-          studyData.push({ id: doc.id, ...doc.data() });
+          studyData.push({ id: doc.id, ...doc.data() } as DailyStudyDocument);
         });
 
         setStudies({
@@ -118,7 +116,8 @@ export default function Page() {
                   <span>{data.name}</span>
                   <ActionsDropdown
                     onEdit={() => {
-                      console.log("edit");
+                      setEditingDoc(data);
+                      router.push("/daily-studies/edit");
                     }}
                     onDelete={() => {
                       setDeleteAlert({

@@ -30,46 +30,169 @@ import {
   DEFAULT_ACCEPTED_IMAGE_TYPES,
 } from "@/constants/general-schemas";
 
-type DailyStudiesFormProps = {
-  footer: React.ReactNode;
+const formSchema = z
+  .object({
+    action: z.enum(["add", "update"]),
+    pdf: z.optional(
+      fileSchema({
+        acceptedTypes: ["application/pdf"],
+      })
+    ),
+    pdfSrc: z.string().optional(),
 
-  /* a className to apply to the form */
-  // className?: string;
+    studyContent: z.string().optional(),
+
+    coverImage: z.optional(
+      fileSchema({
+        acceptedTypes: DEFAULT_ACCEPTED_IMAGE_TYPES,
+      })
+    ),
+    coverImageSrc: z.string().optional(),
+
+    fileName: z.string().nonempty(),
+    // content type can be either 'pdf' or 'text'
+    contentType: z.enum(["pdf", "text"]),
+  })
+  // Requirement:
+  /*
+    if action is add:
+      cover image is required
+      if content type is pdf:
+        pdf is required
+        study content is not required
+      if content type is text:
+        study content is required
+        pdf is not required
+
+    if action is update:
+      if cover image source is present:
+        cover image is optional
+      
+      if content type is pdf:
+        study content is surely optional
+        if pdf src is present:
+          pdf is optional
+        else:
+          pdf is required
+      if content type is text:
+        pdf is surely optional
+        study content is required
+  */
+  .superRefine((val, ctx) => {
+    // lets implement the requirement with proper error messages
+
+    // if action is add
+    if (val.action === "add") {
+      // cover image is required
+      if (!val.coverImage) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "cover image is required",
+          path: ["coverImage"],
+        });
+      }
+
+      // if content type is pdf
+      if (val.contentType === "pdf") {
+        // pdf is required
+        if (!val.pdf) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "pdf is required",
+            path: ["pdf"],
+          });
+        }
+
+        // study content is not required
+      }
+
+      // if content type is text
+      if (val.contentType === "text") {
+        // study content is required
+        if (!val.studyContent) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "study content is required",
+            path: ["studyContent"],
+          });
+        }
+
+        // pdf is not required
+      }
+    }
+
+    // if action is update
+    if (val.action === "update") {
+      // if cover image source is present
+      if (val.coverImageSrc) {
+        // cover image is optional
+      } else {
+        // cover image is required
+        if (!val.coverImage) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "cover image is required",
+            path: ["coverImage"],
+          });
+        }
+      }
+
+      // if content type is pdf
+      if (val.contentType === "pdf") {
+        // study content is surely optional
+        // if pdf src is present
+        if (val.pdfSrc) {
+          // pdf is optional
+        } else {
+          // pdf is required
+          if (!val.pdf) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "pdf is required",
+              path: ["pdf"],
+            });
+          }
+        }
+      }
+
+      // if content type is text
+      if (val.contentType === "text") {
+        // pdf is surely optional
+        // study content is required
+        if (!val.studyContent) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "study content is required",
+            path: ["studyContent"],
+          });
+        }
+      }
+    }
+  });
+
+export type DailyStudiesFormState = z.infer<typeof formSchema>;
+
+const INITIAL_VALUES: DefaultValues<DailyStudiesFormState> = {
+  action: "add",
+  fileName: "",
+  studyContent: "",
+  coverImage: undefined,
+  pdf: undefined,
+  contentType: "text",
+  pdfSrc: "",
+  coverImageSrc: "",
+};
+
+// Component Prop
+type DailyStudiesFormProps = {
+  action: "add" | "update";
+  footer: React.ReactNode;
 
   /* a function to call when the form is submitted */
   onSubmit: (values: DailyStudiesFormState) => void;
 
   /* the initial values of the form */
   initialValues?: DefaultValues<DailyStudiesFormState>;
-};
-
-const formSchema = z.object({
-  pdf: fileSchema({
-    acceptedTypes: ["application/pdf"],
-  }),
-  pdfSrc: z.string().optional(),
-
-  studyContent: z.string().optional(),
-
-  coverImage: fileSchema({
-    isRequired: true,
-    acceptedTypes: DEFAULT_ACCEPTED_IMAGE_TYPES,
-  }),
-  coverImageSrc: z.string().optional(),
-
-  fileName: z.string().nonempty(),
-  // content type can be either 'pdf' or 'text'
-  contentType: z.enum(["pdf", "text"]),
-});
-
-export type DailyStudiesFormState = z.infer<typeof formSchema>;
-
-const INITIAL_VALUES: DefaultValues<DailyStudiesFormState> = {
-  studyContent: "",
-  pdf: undefined,
-  coverImage: undefined,
-  fileName: "",
-  contentType: "text",
 };
 
 const DailyStudiesForm = ({

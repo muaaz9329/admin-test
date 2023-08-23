@@ -50,7 +50,7 @@ export default function Page() {
       const pdfRef = ref(folderRef, `${studyDoc.id}-pdf`);
 
       try {
-        await uploadBytes(coverImgRef, values.coverImage);
+        await uploadBytes(coverImgRef, values.coverImage!);
         console.log("study file cover image uploaded");
         const fileCoverDownloadUrl = await getDownloadURL(coverImgRef);
 
@@ -101,6 +101,8 @@ export default function Page() {
   };
   return (
     <DailyStudiesForm
+      action="add"
+      // @ts-ignore
       onSubmit={onStudySubmission}
       footer={
         <div className="mt-4 flex justify-between">

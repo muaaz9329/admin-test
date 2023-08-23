@@ -91,18 +91,23 @@ export const fileSchema = ({
 }) =>
   z
     .instanceof(File)
+    // .refine((file) => {
+    //   if (isRequired) {
+    //     return !!file;
+    //   }
+    //   return true;
+    // }, "File is required.")
     .refine((file) => {
-      if (isRequired) {
-        return file !== null;
+      if (!file) {
+        return true;
       }
-      return true;
-    }, "File is required.")
-    .refine(
-      (file) => file.size <= MAX_FILE_SIZE,
-      `Max file size is ${MAX_FILE_SIZE / ONE_MB}MB.`
-    )
+      return file.size <= MAX_FILE_SIZE;
+    }, `Max file size is ${MAX_FILE_SIZE / ONE_MB}MB.`)
     .refine((file) => {
       if (ACCEPTED_FILE_TYPES) {
+        if (!file) {
+          return true;
+        }
         return ACCEPTED_FILE_TYPES.includes(file?.type);
       }
 
