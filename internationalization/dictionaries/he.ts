@@ -41,6 +41,14 @@ export default {
       settingsFormTitle: "טופס הגדרות",
       adminLogo: "לוגו מנהל מערכת",
     },
+    requests:{
+      formTitle:'פירוט הבקשה',
+      type:"סוג",
+      name:"שֵׁם",
+      email:"אימייל",
+      phoneNumber:"מספר טלפון",
+      address:"כתובת",
+    }
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -67,6 +75,7 @@ export default {
     delete: "לִמְחוֹק",
     uploadImage: "העלה תמונה",
     uploadVideo: "העלה וידאו",
+    approve: "לְאַשֵׁר",
   },
   messages: {
     areYouSure: "האם אתה בטוח?",
@@ -82,5 +91,6 @@ export default {
     fileName: "שם הקובץ",
     description: "תיאור",
     dailyStudies: "לימודים יומיים",
+    requests:"בקשות"
   },
 } as const;
