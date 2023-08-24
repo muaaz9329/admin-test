@@ -37,18 +37,22 @@ export default {
       formTitle: "טופס לימודים יומיים",
       studyContent: "תוכן לימוד",
     },
+    categories: {
+      formTitle: "טופס קטגוריה",
+      addCategory: "הוסף קטגוריה",
+    },
     settingsForm: {
       settingsFormTitle: "טופס הגדרות",
       adminLogo: "לוגו מנהל מערכת",
     },
-    requests:{
-      formTitle:'פירוט הבקשה',
-      type:"סוג",
-      name:"שֵׁם",
-      email:"אימייל",
-      phoneNumber:"מספר טלפון",
-      address:"כתובת",
-    }
+    requests: {
+      formTitle: "פירוט הבקשה",
+      type: "סוג",
+      name: "שֵׁם",
+      email: "אימייל",
+      phoneNumber: "מספר טלפון",
+      address: "כתובת",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -69,6 +73,8 @@ export default {
     save: "להציל",
     cancel: "לְבַטֵל",
     confirm: "לְאַשֵׁר",
+    add: "לְהוֹסִיף",
+    new: "חָדָשׁ",
     edit: "לַעֲרוֹך",
     addAField: "הוסף שדה",
     addCover: "הוסף כיסוי",
@@ -91,6 +97,19 @@ export default {
     fileName: "שם הקובץ",
     description: "תיאור",
     dailyStudies: "לימודים יומיים",
-    requests:"בקשות"
+    requests: "בקשות",
+
+    name: "שֵׁם",
+    address: "כתובת",
+    email: "אימייל",
+    phoneNumber: "מספר טלפון",
+    type: "סוג",
+    categories: "קטגוריות",
+    subcategories: "קטגוריות משנה",
+    links: "קישורים",
+    consultation: "ייעוץ",
+    category: "קטגוריה",
+    subcategory: "קטגוריה משנה",
+    link: "קישור",
   },
 } as const;

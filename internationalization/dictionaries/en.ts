@@ -49,19 +49,22 @@ export default {
       formTitle: "Daily Studies Form",
       studyContent: "Study Content",
     },
+    categories: {
+      formTitle: "Category Form",
+      addCategory: "Add Category",
+    },
     settingsForm: {
       settingsFormTitle: "Settings Form",
       adminLogo: "Administrator Logo",
     },
-    requests:{
-      formTitle:'Details of the request',
-      type:"Type",
-      name:"Name",
-      email:"Email",
-      phoneNumber:"Phone Number",
-      address:"Address",
-      
-    }
+    requests: {
+      formTitle: "Details of the request",
+      type: "Type",
+      name: "Name",
+      email: "Email",
+      phoneNumber: "Phone Number",
+      address: "Address",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -82,6 +85,9 @@ export default {
     choose: "Choose",
     save: "Save",
     edit: "Edit",
+    add: "Add",
+    new: "New",
+
     delete: "Delete",
     addFile: "Add File",
     addAField: "Add a field",
@@ -104,6 +110,18 @@ export default {
     serialNo: "Sr #",
     dailyStudies: "Daily Studies",
     fileName: "File Name",
-    requests:'Requests'
+    requests: "Requests",
+    name: "Name",
+    email: "Email",
+    phoneNumber: "Phone Number",
+    address: "Address",
+    type: "Type",
+    category: "Category",
+    subcategory: "Subcategory",
+    link: "Link",
+    links: "Links",
+    consultation: "Consultation",
+    categories: "Categories",
+    subcategories: "Subcategories",
   },
 } as const;
