@@ -13,6 +13,7 @@ import { MoreVertical } from "lucide-react";
 type ActionsDropdownProps = {
   onEdit?: () => void;
   onDelete?: () => void;
+  onApprove?: () => void;
 };
 
 export const ActionsDropdown = (props: ActionsDropdownProps) => {
@@ -24,6 +25,13 @@ export const ActionsDropdown = (props: ActionsDropdownProps) => {
         <MoreVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-primary">
+      {
+          props.onApprove &&(
+            <DropdownMenuItem onClick={props.onApprove}>
+            {t("approve")}
+          </DropdownMenuItem>
+          )
+        }
         {props.onEdit && (
           <DropdownMenuItem onClick={props.onEdit}>
             {t("edit")}
@@ -34,6 +42,7 @@ export const ActionsDropdown = (props: ActionsDropdownProps) => {
             {t("delete")}
           </DropdownMenuItem>
         )}
+        
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -53,6 +53,15 @@ export default {
       settingsFormTitle: "Settings Form",
       adminLogo: "Administrator Logo",
     },
+    requests:{
+      formTitle:'Details of the request',
+      type:"Type",
+      name:"Name",
+      email:"Email",
+      phoneNumber:"Phone Number",
+      address:"Address",
+      
+    }
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -79,6 +88,7 @@ export default {
     addCover: "Add Cover",
     uploadImage: "Upload Image",
     uploadVideo: "Upload Video",
+    approve: "Approve",
   },
   messages: {
     areYouSure: "Are you sure?",
@@ -94,5 +104,6 @@ export default {
     serialNo: "Sr #",
     dailyStudies: "Daily Studies",
     fileName: "File Name",
+    requests:'Requests'
   },
 } as const;
