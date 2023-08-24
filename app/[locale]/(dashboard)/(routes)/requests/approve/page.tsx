@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect } from "react";
 
 import { useI18n } from "@/internationalization/client";
@@ -6,21 +7,12 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import useRequestForm from "../components/use-request-form";
 
-
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
 
-
-import {
-
-  doc,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { firestore } from "@/lib/firebase/firebase-config";
-
-
 
 function Page() {
   const t = useI18n();
@@ -34,7 +26,6 @@ function Page() {
 
   useEffect(() => {
     if (editingDoc) {
-      console.log(editingDoc);
       setIncomingDoc(editingDoc);
     } else {
       console.log("no doc");

@@ -15,9 +15,6 @@ import { Input } from "@/components/ui/input";
 import { ListItem } from "@/components/ui/list-item";
 import { Loader } from "lucide-react";
 
-
-
-
 export default function Page() {
   const t = useI18n();
   const router = useRouter();
@@ -57,8 +54,6 @@ export default function Page() {
       }
     ); //* gets all the requests and filter them if they are already approved
 
-
-
     return () => unsubscribe();
   }, []);
 
@@ -90,7 +85,7 @@ export default function Page() {
         {requests.state === "loading" ? (
           <Loader />
         ) : requests.data.length === 0 ? (
-          <Alert>No daily studies content found</Alert>
+          <Alert>No requests found</Alert>
         ) : (
           <div className="space-y-4">
             {requests.data.map((data, index) => {
@@ -113,7 +108,6 @@ export default function Page() {
                         isOpen: true,
                         id: data.id,
                       });
-                      console.log("delete");
                     }}
                   />
                 </ListItem>
