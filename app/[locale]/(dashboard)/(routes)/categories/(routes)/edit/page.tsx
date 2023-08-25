@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useI18n } from "@/internationalization/client";
-import useCategoryForm from "../components/hooks/use-category-form";
+import useCategoryForm from "../hooks/use-category-form";
 
 export default function Page() {
   const t = useI18n();

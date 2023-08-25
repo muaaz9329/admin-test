@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import CategoryForm, { CategoryFormState } from "../components/category-form";
+import CategoryForm, {
+  CategoryFormState,
+} from "../../components/category-form";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   addDoc,

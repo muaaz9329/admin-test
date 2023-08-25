@@ -18,12 +18,13 @@ import { ListItem } from "@/components/ui/list-item";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { useI18n } from "@/internationalization/client";
 import { Input } from "@/components/ui/input";
-import useCategoryForm from "./components/hooks/use-category-form";
+import useCategoryForm from "./hooks/use-category-form";
 
 export default function Page() {
   const t = useI18n();
   const router = useRouter();
-  const { setEditingDoc } = useCategoryForm();
+  const { setEditingDoc, setCategories: setCategoriesInCtx } =
+    useCategoryForm();
 
   const [categories, setCategories] = useState<{
     state: RequestState;
@@ -52,10 +53,12 @@ export default function Page() {
           state: "success",
           data: categories,
         });
+        setCategoriesInCtx(categories);
       }
     );
 
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const deleteChosenCategory = async () => {

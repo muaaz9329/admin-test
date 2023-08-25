@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { DefaultValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useI18n } from "@/internationalization/client";
 
@@ -36,7 +36,7 @@ type PopupNewsFormProps = {
   onSubmit: (values: PopupNewsFormState) => void;
 
   /* the initial values of the form */
-  initialValues?: PopupNewsFormState;
+  initialValues?: DefaultValues<PopupNewsFormState>;
 };
 
 const formSchema = z.object({
@@ -54,11 +54,11 @@ const formSchema = z.object({
 
 export type PopupNewsFormState = z.infer<typeof formSchema>;
 
-const INITIAL_VALUES: PopupNewsFormState = {
+const INITIAL_VALUES: DefaultValues<PopupNewsFormState> = {
   newsContent: "",
   // newsImage is of type FileList so we can use the FileList type to initialize it
-  newsImage: new File([], ""),
-  newsVideo: new File([], ""),
+  newsImage: undefined,
+  newsVideo: undefined,
 };
 
 /*
@@ -93,7 +93,7 @@ export default function PopupNewsForm({
                     <FormLabel>{t("words.image") + ":"} </FormLabel>
                     <div className="space-y-2">
                       <FormControl>
-                        <FileInputBox fileType="image" {...field} />
+                        <FileInputBox {...field} fileType="image" />
                       </FormControl>
 
                       <FormMessage />

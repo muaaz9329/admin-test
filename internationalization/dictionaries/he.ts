@@ -41,6 +41,10 @@ export default {
       formTitle: "טופס קטגוריה",
       addCategory: "הוסף קטגוריה",
     },
+    subcategories: {
+      formTitle: "טופס קטגוריה משנה",
+      addCategory: "הוסף קטגוריה משנה",
+    },
     settingsForm: {
       settingsFormTitle: "טופס הגדרות",
       adminLogo: "לוגו מנהל מערכת",
