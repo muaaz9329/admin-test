@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import CategoryForm, { CategoryFormState } from "../components/category-form";
+import SubcategoryForm, {
+  SubcategoryFormState,
+} from "../../components/subcategory-form";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
@@ -9,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useI18n } from "@/internationalization/client";
-import useCategoryForm from "../components/hooks/use-category-form";
+import useCategoryForm from "../../hooks/use-subcategory-form";
 
 export default function Page() {
   const t = useI18n();
@@ -18,11 +20,11 @@ export default function Page() {
 
   const [isUploading, setIsUploading] = React.useState(false);
 
-  const onUpdate = async (values: CategoryFormState) => {
+  const onUpdate = async (values: SubcategoryFormState) => {
     const loadingToastId = toast.loading("Updating category...");
     setIsUploading(true);
 
-    const docRef = doc(firestore, "categories", editingDoc?.id!);
+    const docRef = doc(firestore, "subcategories", editingDoc?.id!);
     const coverImgRef = ref(fireStorage, `${editingDoc?.id}-image`);
 
     console.log({ values });
@@ -46,6 +48,7 @@ export default function Page() {
       const updatedDocData = {
         name: values.name,
         coverImage: newCoverSrc || editingDoc?.coverImage,
+        parentId: values.parentId,
         updatedAt: serverTimestamp(),
       };
 
@@ -62,14 +65,13 @@ export default function Page() {
     }
   };
   return (
-    <CategoryForm
-      action="update"
-      // @ts-ignore
+    <SubcategoryForm
       onSubmit={onUpdate}
       initialValues={{
         action: "update",
         name: editingDoc?.name,
         coverImageSrc: editingDoc?.coverImage,
+        parentId: editingDoc?.parentId,
       }}
       footer={
         <div className="mt-4 flex justify-between">

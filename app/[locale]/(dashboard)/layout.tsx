@@ -6,11 +6,11 @@ import { Card } from "@/components/ui/card";
 import { DashboardHeader } from "./components/header";
 import { DashboardSidebar } from "./components/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useEffect } from "react";
+import { Loader } from "@/components/ui/loader";
 
 /**
  * Layout for the whole dashboard
- * @param param0
- * @returns
  */
 export default function DashboardRootLayout({
   children,
@@ -18,12 +18,19 @@ export default function DashboardRootLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { isLoggedIn } = useAuthContext();
+  const { isLoggedIn, authLoading } = useAuthContext();
 
-  if (!isLoggedIn) {
-    router.push("/login");
-    return <></>;
-  }
+  useEffect(() => {
+    console.log({
+      isLoggedIn,
+      authLoading,
+    });
+
+    if (!authLoading)
+      if (!isLoggedIn) {
+        router.push("/login");
+      }
+  }, [isLoggedIn, authLoading, router]);
 
   return (
     <>

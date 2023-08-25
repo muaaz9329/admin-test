@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import CategoryForm, { CategoryFormState } from "../components/category-form";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   addDoc,
@@ -15,34 +14,41 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
 import toast from "react-hot-toast";
+import { useI18n } from "@/internationalization/client";
+import SubcategoryForm, {
+  SubcategoryFormState,
+} from "../../components/subcategory-form";
 
 export default function Page() {
-  const [isUploading, setIsUploading] = React.useState(false);
+  const t = useI18n();
   const router = useRouter();
 
-  const onAddCategory = async (values: CategoryFormState) => {
-    const loadingToastId = toast.loading("Adding Category...");
+  const [isUploading, setIsUploading] = React.useState(false);
+
+  const onAddSubcategory = async (values: SubcategoryFormState) => {
+    const loadingToastId = toast.loading("Adding Subcategory...");
 
     console.log("formvalues", { values });
 
     setIsUploading(true);
     /*
-    We'll first add a document to categories collection and keep cover image empty.
+    We'll first add a document to subcategories collection and keep cover image empty.
     Then we'll update image cloud storage folder news with the document id as name like docid-image
     Then we'll update the document with the image url.
 
     If an error occurs during news addition, we'll delete the document from news collection and delete the image from storage.
     */
 
-    const folderRef = ref(fireStorage, "categories");
+    const folderRef = ref(fireStorage, "subcategories");
 
-    const categoriesCollection = collection(firestore, "categories");
+    const categoriesCollection = collection(firestore, "subcategories");
 
     try {
-      const docData: Partial<CategoryDocument> = {
+      const docData: Partial<SubCategoryDocument> = {
         name: values.name,
         createdAt: serverTimestamp(),
         coverImage: "",
+        parentId: values.parentId,
       };
 
       // adding new Doc
@@ -66,7 +72,7 @@ export default function Page() {
         console.log(error);
         setIsUploading(false);
         toast.dismiss(loadingToastId);
-        toast.error("Error adding daily study");
+        toast.error("Error adding subcategory");
         // delete the document from news collection
         deleteDoc(docRef);
         return;
@@ -75,7 +81,7 @@ export default function Page() {
       setIsUploading(false);
 
       toast.dismiss(loadingToastId);
-      toast.success("Daily studies added successfully");
+      toast.success("Subcategory added successfully");
 
       // redirect to news page
       router.back();
@@ -84,14 +90,12 @@ export default function Page() {
 
       console.log({ error });
       toast.dismiss(loadingToastId);
-      toast.error("Error adding daily study");
+      toast.error("Error adding subcategory");
     }
   };
   return (
-    <CategoryForm
-      action="add"
-      // @ts-ignore
-      onSubmit={onAddCategory}
+    <SubcategoryForm
+      onSubmit={onAddSubcategory}
       footer={
         <div className="mt-4 flex justify-between">
           <Button
@@ -105,14 +109,12 @@ export default function Page() {
             }}
           >
             <X className="w-5 h-5 ml-1" />
-            Cancel
-            {}
+            {t("actions.cancel")}
           </Button>
 
           <Button size={"lg"} type="submit" disabled={isUploading}>
             <Check className="w-5 h-5 ml-1" />
-            Save
-            {/* {t("actions.")} */}
+            {t("actions.save")}
           </Button>
         </div>
       }

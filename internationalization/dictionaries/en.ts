@@ -53,6 +53,10 @@ export default {
       formTitle: "Category Form",
       addCategory: "Add Category",
     },
+    subcategories: {
+      formTitle: "Sub-Category Form",
+      addCategory: "Add a sub-category",
+    },
     settingsForm: {
       settingsFormTitle: "Settings Form",
       adminLogo: "Administrator Logo",

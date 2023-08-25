@@ -88,7 +88,8 @@ export const AuthContextProvider = ({
   // setting the authLoading state to true only when loading becomes true and it becomes true when user is trying to login .
   // we'll set it to false customly below after authorizing user or when there is an error while signing in which is implemented in error useEffect
   useEffect(() => {
-    if (loading) setAuthLoading(loading);
+    if (loading) setAuthLoading(true);
+    else setAuthLoading(false);
   }, [loading]);
 
   // checking if user exists and if user has role "admin"

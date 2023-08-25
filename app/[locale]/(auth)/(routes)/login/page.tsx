@@ -60,7 +60,7 @@ function LoginPage() {
 
     if (isLoggedIn) {
       toast.success("You are signed in!");
-      router.push("/");
+      router.back();
     }
   }, [authError, authLoading, isLoggedIn, router]);
 

@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,6 +21,15 @@ import {
   fileSchema,
   DEFAULT_ACCEPTED_IMAGE_TYPES,
 } from "@/constants/general-schemas";
+import useCategoryForm from "../../categories/hooks/use-category-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import SassySelect from "@/components/ui/sassy-select";
 
 const formSchema = z
   .object({
@@ -33,7 +41,7 @@ const formSchema = z
       })
     ),
     coverImageSrc: z.string().optional(),
-
+    parentId: z.string().nonempty(),
     name: z.string().nonempty(),
   })
 
@@ -75,35 +83,38 @@ const formSchema = z
     }
   });
 
-export type CategoryFormState = z.infer<typeof formSchema>;
+export type SubcategoryFormState = z.infer<typeof formSchema>;
 
-const INITIAL_VALUES: DefaultValues<CategoryFormState> = {
+const INITIAL_VALUES: DefaultValues<SubcategoryFormState> = {
   action: "add",
   name: "",
   coverImage: undefined,
   coverImageSrc: "",
+  parentId: undefined,
 };
 
 // Component Prop
-type CategoryFormProps = {
-  action: "add" | "update";
+type SubcategoryFormProps = {
+  // action: "add" | "update";
   footer: React.ReactNode;
 
   /* a function to call when the form is submitted */
-  onSubmit: (values: CategoryFormState) => void;
+  onSubmit: (values: SubcategoryFormState) => void;
 
   /* the initial values of the form */
-  initialValues?: DefaultValues<CategoryFormState>;
+  initialValues?: DefaultValues<SubcategoryFormState>;
 };
 
-const DailyStudiesForm = ({
+const SubcategoryForm = ({
   footer,
   onSubmit,
   initialValues = INITIAL_VALUES,
-}: CategoryFormProps) => {
+}: SubcategoryFormProps) => {
   const t = useI18n();
 
-  const form = useForm<CategoryFormState>({
+  const { categories: parentCategories } = useCategoryForm();
+
+  const form = useForm<SubcategoryFormState>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
   });
@@ -114,7 +125,7 @@ const DailyStudiesForm = ({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <div className="flex justify-between">
-              <FormLabel>{t("pages.categories.formTitle")}</FormLabel>
+              <FormLabel>{t("pages.subcategories.formTitle")}</FormLabel>
             </div>
 
             <FormField
@@ -129,6 +140,29 @@ const DailyStudiesForm = ({
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="parentId"
+              render={({ field }) => (
+                <FormItem className="flex gap-4 space-y-0">
+                  <FormLabel className="basis-28 whitespace-nowrap">
+                    Parent Category:
+                  </FormLabel>
+                  <div className="flex-col gap-2 basis-96">
+                    <SassySelect
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      options={parentCategories}
+                      labelKey="name"
+                      valueKey="id"
+                      placeholder="Choose a parent category"
+                    />
                     <FormMessage />
                   </div>
                 </FormItem>
@@ -166,4 +200,4 @@ const DailyStudiesForm = ({
   );
 };
 
-export default DailyStudiesForm;
+export default SubcategoryForm;
