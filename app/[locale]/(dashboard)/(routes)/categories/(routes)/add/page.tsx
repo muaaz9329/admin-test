@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import CategoryForm, {
-  CategoryFormState,
-} from "../../components/category-form";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   addDoc,
@@ -13,10 +12,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
+
+import CategoryForm, {
+  CategoryFormState,
+} from "../../components/category-form";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { Check, X } from "lucide-react";
-import toast from "react-hot-toast";
 
 export default function Page() {
   const [isUploading, setIsUploading] = React.useState(false);
@@ -68,8 +69,8 @@ export default function Page() {
         console.log(error);
         setIsUploading(false);
         toast.dismiss(loadingToastId);
-        toast.error("Error adding daily study");
-        // delete the document from news collection
+        toast.error("Error adding category");
+        // delete the document from collection
         deleteDoc(docRef);
         return;
       }
@@ -77,7 +78,7 @@ export default function Page() {
       setIsUploading(false);
 
       toast.dismiss(loadingToastId);
-      toast.success("Daily studies added successfully");
+      toast.success("Category added successfully");
 
       // redirect to news page
       router.back();
@@ -86,7 +87,7 @@ export default function Page() {
 
       console.log({ error });
       toast.dismiss(loadingToastId);
-      toast.error("Error adding daily study");
+      toast.error("Error adding category");
     }
   };
   return (

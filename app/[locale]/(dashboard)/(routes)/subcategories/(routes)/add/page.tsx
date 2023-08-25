@@ -95,7 +95,6 @@ export default function Page() {
   };
   return (
     <SubcategoryForm
-      action="add"
       onSubmit={onAddSubcategory}
       footer={
         <div className="mt-4 flex justify-between">

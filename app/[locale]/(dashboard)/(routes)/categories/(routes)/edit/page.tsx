@@ -1,15 +1,19 @@
 "use client";
 import React from "react";
-import CategoryForm, { CategoryFormState } from "../components/category-form";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { Check, X } from "lucide-react";
-import toast from "react-hot-toast";
+
 import { useI18n } from "@/internationalization/client";
-import useCategoryForm from "../hooks/use-category-form";
+import useCategoryForm from "../../hooks/use-category-form";
+
+import CategoryForm, {
+  CategoryFormState,
+} from "../../components/category-form";
+import { Button } from "@/components/ui/button";
+import { Check, X } from "lucide-react";
 
 export default function Page() {
   const t = useI18n();
