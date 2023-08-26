@@ -57,6 +57,24 @@ export default {
       phoneNumber: "מספר טלפון",
       address: "כתובת",
     },
+    links: {
+      formTitle: "הוסף קישור חדש",
+      links: "קישורים",
+      youtube: "יוטיוב",
+      whatsapp: "וואטסאפ",
+      website: "אתר אינטרנט",
+      websiteUrl: "כתובת אתר",
+      selectList: "בחר רשימה",
+    },
+    consultation: {
+      addBtn: "הוסף מוצר חדש",
+      files: "קבצים",
+      payment: "בתשלום",
+      formTitle: "טופס קובץ",
+      free: "חינם",
+      paid: "שולם",
+      amount:"כמות"
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",

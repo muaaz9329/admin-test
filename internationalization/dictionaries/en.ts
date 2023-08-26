@@ -69,6 +69,24 @@ export default {
       phoneNumber: "Phone Number",
       address: "Address",
     },
+    links:{
+      formTitle:"Add a new link",
+      links:"Links",
+      youtube:"Youtube",
+      whatsapp:"Whatsapp",
+      website:"Website",
+      websiteUrl:"Website URL",
+      selectList:"Select a list"
+    },
+    consultation:{
+      addBtn:"Add a new product",
+      files:"files",
+      payment:"Payment",
+      formTitle:"file form",
+      free:"free",
+      paid:"paid",
+      amount:"Amount",
+    }
   },
   intervals: {
     "seconds#other": "{count} שניות",
