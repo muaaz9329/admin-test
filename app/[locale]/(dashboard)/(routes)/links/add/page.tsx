@@ -11,12 +11,11 @@ import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { ILink, Links } from "../components/types";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
-type Props = {};
-
-const Page = (props: Props) => {
+const Page = () => {
   const router = useRouter();
   const [isUploading, setIsUploading] = React.useState(false);
-  const [Doclink, setlinks] = useState<{
+
+  const [appLinks, setAppLinks] = useState<{
     state: RequestState;
     data: Links | null;
   }>({
@@ -30,6 +29,7 @@ const Page = (props: Props) => {
     isOpen: false,
     data: null,
   });
+
   var loadingToastId: any;
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Page = (props: Props) => {
       (doc) => {
         if (doc.exists()) {
           console.log("Document data:", doc.data());
-          setlinks({
+          setAppLinks({
             state: "success",
             data: doc.data() as Links,
           });
@@ -49,9 +49,10 @@ const Page = (props: Props) => {
     return () => unsubscribe();
   }, []); // fetching data from firestore
 
-  const handleOverride = async () => { // this function will run and over write the exsisting value for the same value key pair
+  const handleOverride = async () => {
+    // this function will run and over write the existing value for the same value key pair
     const linkDoc = doc(firestore, "appconfig", "app-links");
-    const filterValues = Doclink.data?.links.filter(
+    const filterValues = appLinks.data?.links.filter(
       (link, index) => link.type !== alreadyAlert.data?.type
     ); // filter the values that are not equal to the type of the new link
     // will return the values that are not equal to the type of the new link , for example if the new link is youtube then it will return the values that are not youtube such as whatsapp and website
@@ -71,25 +72,24 @@ const Page = (props: Props) => {
 
   const onSubmitLink = async (values: AddLinkFormState) => {
     loadingToastId = toast.loading("Adding Links...");
-    console.log("formvalues", { values });
     setIsUploading(true);
 
     const linkDoc = doc(firestore, "appconfig", "app-links");
 
-    const AlreadyInDoc = Doclink.data?.links.filter((link, index) => {
+    const existingLinks = appLinks.data?.links.filter((link) => {
       if (link.type === values.type && link.url !== "") {
         return link;
       }
     }); // check weather this value is already have a url in the doc or not
-    
-    if (AlreadyInDoc?.length !== 0) {
+
+    if (existingLinks?.length !== 0) {
       setAlreadyAlert({
         isOpen: true,
         data: values,
       }); // if the value is already in the doc then set the alert to true
     } else {
       try {
-        const filterValues = Doclink.data?.links.filter(
+        const filterValues = appLinks.data?.links.filter(
           (link, index) => link.type !== values.type
         ); // filter the values that are not equal to the type of the new link
         // will return the values that are not equal to the type of the new link , for example if the new link is youtube then it will return the values that are not youtube such as whatsapp and website
@@ -154,6 +154,8 @@ const Page = (props: Props) => {
           setIsUploading(false);
         }}
         onConfirm={handleOverride}
+        title="Link Already Exists"
+        description="This link already exists in the app, do you want to override it?"
       />
     </>
   );
