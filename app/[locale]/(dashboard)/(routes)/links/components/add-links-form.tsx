@@ -3,7 +3,6 @@
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,7 +24,7 @@ import { z } from "zod";
 
 const formSchema = z.object({
   action: z.enum(["add", "update"]),
-  type: z.enum(["youtube", "whatsapp", "website"]),
+  type: z.enum(["youtube", "whatsapp", "website", "youtube-playlist"]),
   url: z.string().url(),
 });
 export type AddLinkFormState = z.infer<typeof formSchema>;
@@ -33,22 +32,22 @@ export type AddLinkFormState = z.infer<typeof formSchema>;
 const INITIAL_VALUE: AddLinkFormState = {
   action: "add",
   type: "website",
-  url: "www.google.com",
+  url: "",
 };
 
-//Componenet Props
-type AddlinksFormProps = {
+//Component Props
+type AddLinksFormProps = {
   initialValues?: DefaultValues<AddLinkFormState>;
   action: "add" | "update";
   footer: React.ReactNode;
   onSubmit: (values: AddLinkFormState) => void;
 };
 
-const AddlinksForm = ({
+const AddLinksForm = ({
   initialValues = INITIAL_VALUE,
   footer,
   onSubmit,
-}: AddlinksFormProps) => {
+}: AddLinksFormProps) => {
   const t = useI18n();
   const form = useForm<AddLinkFormState>({
     defaultValues: initialValues,
@@ -57,12 +56,10 @@ const AddlinksForm = ({
   return (
     <div>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-8">
             <div className="flex justify-between">
               <FormLabel>{t("pages.links.formTitle")}</FormLabel>
-
-              
             </div>
             <FormField
               control={form.control}
@@ -74,7 +71,11 @@ const AddlinksForm = ({
                   </FormLabel>
                   <div className="flex-col gap-2">
                     <FormControl>
-                      <Input {...field} className="w-[30vw]" />
+                      <Input
+                        {...field}
+                        className="w-[30vw]"
+                        placeholder="URL Here"
+                      />
                     </FormControl>
                     <FormMessage />
                   </div>
@@ -87,7 +88,7 @@ const AddlinksForm = ({
               render={({ field }) => (
                 <FormItem className="flex gap-2 space-y-0 ">
                   <FormLabel className="basis-28 whitespace-nowrap">
-                    {t("pages.links.selectList")}:
+                    {t("pages.links.chooseType")}:
                   </FormLabel>
                   <div className="space-y-10 w-52">
                     <Select
@@ -96,33 +97,36 @@ const AddlinksForm = ({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Choose your content type" />
+                          <SelectValue placeholder="Add URL Here" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="website">{t('pages.links.website')}</SelectItem>
-                        <SelectItem value="youtube">{t('pages.links.youtube')}</SelectItem>
-                        <SelectItem value="whatsapp">{t('pages.links.whatsapp')}</SelectItem>
+                        <SelectItem value="website">
+                          {t("pages.links.website")}
+                        </SelectItem>
+                        <SelectItem value="youtube">
+                          {t("pages.links.youtube")}
+                        </SelectItem>
+                        <SelectItem value="whatsapp">
+                          {t("pages.links.whatsapp")}
+                        </SelectItem>
+                        <SelectItem value="youtubePlaylist">
+                          {t("pages.links.youtubePlaylist")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
-
-                   
 
                     <FormMessage />
                   </div>
                 </FormItem>
               )}
             />
-            <div className="absolute bottom-5 w-[95%]">
-      {footer && footer}
-      </div>
-      
-            </div>
-            </form>
+            <div className="absolute bottom-5 w-[95%]">{footer && footer}</div>
+          </div>
+        </form>
       </Form>
-      
     </div>
   );
 };
 
-export default AddlinksForm;
+export default AddLinksForm;

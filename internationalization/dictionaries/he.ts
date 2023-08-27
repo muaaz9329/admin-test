@@ -61,10 +61,11 @@ export default {
       formTitle: "הוסף קישור חדש",
       links: "קישורים",
       youtube: "יוטיוב",
+      youtubePlaylist: "יוטיוב פלייליסט",
       whatsapp: "וואטסאפ",
       website: "אתר אינטרנט",
       websiteUrl: "כתובת אתר",
-      selectList: "בחר רשימה",
+      chooseType: "בחר סוג",
     },
     consultation: {
       addBtn: "הוסף מוצר חדש",
@@ -73,7 +74,7 @@ export default {
       formTitle: "טופס קובץ",
       free: "חינם",
       paid: "שולם",
-      amount:"כמות"
+      amount: "כמות",
     },
   },
   intervals: {

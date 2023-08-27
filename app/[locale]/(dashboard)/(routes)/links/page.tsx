@@ -21,23 +21,22 @@ import useLinkData from "./components/hooks/useLinkData";
 const Page = () => {
   const t = useI18n();
   const router = useRouter();
-  const {setEditingLink} = useLinkData()
-  const [link, setlinks] = useState<{
+  const { setEditingLink } = useLinkData();
+
+  const [appLinks, setAppLinks] = useState<{
     state: RequestState;
     data: ILink[] | null;
-    rawData : Links | null;
+    rawData: Links | null;
   }>({
     state: "loading",
     data: null,
     rawData: null,
   });
 
-  const [deleteAlert, setDeleteAlert] = useState<
-  {
+  const [deleteAlert, setDeleteAlert] = useState<{
     isOpen: boolean;
     type: string;
-  }
-  >({
+  }>({
     isOpen: false,
     type: "",
   });
@@ -49,9 +48,11 @@ const Page = () => {
         if (doc.exists()) {
           console.log("Document data:", doc.data());
 
-          const filteredData = doc.data()?.links.filter((data:ILink)=> data.url !== '') //* filter the empty links
-          
-          setlinks({
+          const filteredData = doc
+            .data()
+            ?.links.filter((data: ILink) => data.url !== ""); //* filter the empty links
+
+          setAppLinks({
             state: "success",
             data: filteredData,
             rawData: doc.data() as Links,
@@ -63,42 +64,35 @@ const Page = () => {
     return () => unsubscribe();
   }, []);
 
-
-  const TypeString =  (type: string) => {
-    if(type === 'youtube'){
-      return t("pages.links.youtube")
-    }
-    else if(type === 'website'){
-      return t("pages.links.website")
-    }
-    else if(type ==='whatsapp'){
-      return t("pages.links.whatsapp")
-    }
-  }
-
   const deleteLink = async () => {
-
     const linkDoc = doc(firestore, "appconfig", "app-links");
-    
-    const filterValues = link.rawData?.links?.filter(
+
+    const filterValues = appLinks.rawData?.links?.filter(
       (link, index) => link.type !== deleteAlert.type
     );
-    console.log(filterValues)
-    try{
+    try {
       await updateDoc(linkDoc, {
         links: [
-          ...filterValues as ILink[],{
+          ...(filterValues as ILink[]),
+          {
             type: deleteAlert.type,
-            url: '',
-          }
+            url: "",
+          },
         ],
-    })
-    }catch (error) {
+      });
+    } catch (error) {
       console.log(error);
 
       toast.error("There was an error deleting this link");
     }
-}
+  };
+
+  const typeToTitle = {
+    youtube: t("pages.links.youtube"),
+    website: t("pages.links.website"),
+    whatsapp: t("pages.links.whatsapp"),
+    youtubePlaylist: t("pages.links.youtubePlaylist"),
+  };
 
   return (
     <div>
@@ -111,33 +105,31 @@ const Page = () => {
 
       <ListItem className="bg-primary mt-8 py-2 rounded-full">
         <span>{t("words.serialNo")}</span>
-        <span>{t("pages.links.links")}</span>
+        <span>{t("words.links")}</span>
         <span>{t("actions.edit")}</span>
       </ListItem>
       <div className="mt-6">
-        {link.state === "loading" ? (
+        {appLinks.state === "loading" ? (
           <Loader />
-        ) : link.data?.length === 0 ? (
-          <Alert>No daily studies content found</Alert>
+        ) : appLinks.data?.length === 0 ? (
+          <Alert>You have not added any links yet.</Alert>
         ) : (
           <div className="space-y-4">
-            {link.data?.map((data, index) => {
+            {appLinks.data?.map((data, index) => {
               return (
                 <ListItem className="rounded-lg" key={data.url}>
                   <span>{index + 1}</span>
-                  <span>{TypeString(data.type)}</span>
+                  <span>{typeToTitle[data.type]}</span>
                   <ActionsDropdown
                     onEdit={() => {
                       setEditingLink(data);
                       router.push("/links/edit");
-                      console.log('edit')
                     }}
                     onDelete={() => {
                       setDeleteAlert({
                         isOpen: true,
                         type: data.type,
                       });
-                      console.log('delete')
                     }}
                   />
                 </ListItem>
