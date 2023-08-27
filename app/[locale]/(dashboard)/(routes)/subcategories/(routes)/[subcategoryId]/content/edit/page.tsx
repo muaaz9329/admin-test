@@ -1,37 +1,88 @@
 "use client";
-import React from "react";
-import DailyStudiesForm, {
-  DailyStudiesFormState,
-} from "../components/daily-studies-form";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { Check, X } from "lucide-react";
-import toast from "react-hot-toast";
-import { useI18n } from "@/internationalization/client";
-import useDailyStudiesForm from "../components/hooks/use-daliy-studies-form";
 
-export default function Page() {
+import React from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { fireStorage, firestore } from "@/lib/firebase/firebase-config";
+import { useI18n } from "@/internationalization/client";
+
+import SubcategoryContentForm, {
+  SubcategoryContentFormState,
+} from "../components/subcategory-content-form";
+import { Button } from "@/components/ui/button";
+import { Check, X } from "lucide-react";
+import useSubcategoryContentForm from "../hooks/use-subcategory-content-form";
+
+export default function Page({
+  params,
+}: {
+  params: { subcategoryId: string };
+}) {
   const t = useI18n();
   const router = useRouter();
-  const { editingDoc } = useDailyStudiesForm();
+  const subcategoryId = params.subcategoryId;
+
+  const { editingDoc } = useSubcategoryContentForm();
 
   const [isUploading, setIsUploading] = React.useState(false);
 
-  const onUpdateStudy = async (values: DailyStudiesFormState) => {
-    const loadingToastId = toast.loading("Adding Studies...");
+  React.useEffect(() => {
+    // validating if the subcategory exists
+    const subcategoryRef = doc(firestore, "subcategories", subcategoryId);
+
+    getDoc(subcategoryRef)
+      .then((doc) => {
+        if (!doc.exists()) {
+          console.log("No such document!");
+          toast.error("Subcategory not found");
+          router.push("/404");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+        toast.error("Error getting subcategory");
+        router.push("/404");
+      });
+
+    // validating if the content exists
+    const contentRef = doc(firestore, "category-content", editingDoc?.id!);
+
+    getDoc(contentRef)
+      .then((doc) => {
+        if (!doc.exists()) {
+          console.log("No such document!");
+          toast.error("Content not found");
+          router.push("/404");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+        toast.error("Error getting content");
+        router.push("/404");
+      });
+  }, [subcategoryId, router]);
+
+  const onUpdate = async (values: SubcategoryContentFormState) => {
+    const loadingToastId = toast.loading("Updating content ...");
     setIsUploading(true);
 
-    const studyDoc = doc(firestore, "daily-studies", editingDoc?.id!);
+    const studyDoc = doc(firestore, "category-content", editingDoc?.id!);
     const coverImgRef = ref(
       fireStorage,
-      `daily-studies/${editingDoc?.id}-image`
+      `category-content/${editingDoc?.id}-image`
     );
-    const pdfRef = ref(fireStorage, `daily-studies/${editingDoc?.id}-pdf`);
-
-    console.log({ values });
+    const pdfRef = ref(fireStorage, `category-content/${editingDoc?.id}-pdf`);
 
     try {
       let newCoverSrc, newPdfSrc;
@@ -65,41 +116,37 @@ export default function Page() {
       const updatedDoc = {
         name: values.fileName,
         coverImage: newCoverSrc || editingDoc?.coverImage,
-        pdfLink: newPdfSrc || editingDoc?.pdfLink,
+        pdf: newPdfSrc || editingDoc?.pdf,
         studyContent: values.studyContent,
         contentType: values.contentType,
+        timeToRead: values.timeToRead,
         updatedAt: serverTimestamp(),
       };
-
-      console.log({
-        updatedDoc,
-        values,
-      });
 
       await updateDoc(studyDoc, updatedDoc);
 
       toast.dismiss(loadingToastId);
-      toast.success("Daily study updated successfully");
+      toast.success("Updated Successfully");
       router.back();
     } catch (error) {
       console.log({ error });
 
       toast.dismiss(loadingToastId);
-      toast.error("Error updating daily study");
+      toast.error("There was an error updating the content");
     }
   };
   return (
-    <DailyStudiesForm
+    <SubcategoryContentForm
       action="update"
-      // @ts-ignore
-      onSubmit={onUpdateStudy}
+      onSubmit={onUpdate}
       initialValues={{
         action: "update",
         fileName: editingDoc?.name,
         coverImageSrc: editingDoc?.coverImage,
-        pdfSrc: editingDoc?.pdfLink,
+        pdfSrc: editingDoc?.pdf,
         studyContent: editingDoc?.studyContent,
         contentType: editingDoc?.contentType,
+        timeToRead: editingDoc?.timeToRead,
       }}
       footer={
         <div className="mt-4 flex justify-between">

@@ -76,6 +76,9 @@ export default {
       paid: "שולם",
       amount: "כמות",
     },
+    subcategoryContent: {
+      formTitle: "טופס תוכן קטגוריה משנה",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -134,5 +137,10 @@ export default {
     category: "קטגוריה",
     subcategory: "קטגוריה משנה",
     link: "קישור",
+    linkType: "סוג קישור",
+    addContent: "הוסף תוכן",
+    noContent: "אין תוכן",
+    content: "תוכן",
+    timeToRead: "זמן לקריאה",
   },
 } as const;

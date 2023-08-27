@@ -64,7 +64,7 @@ export default function Page() {
   const deleteChosenCategory = async () => {
     const categoryCoverRef = ref(
       fireStorage,
-      "categories" + deleteAlert.id + "-cover"
+      "categories/" + deleteAlert.id + "-cover"
     );
 
     try {

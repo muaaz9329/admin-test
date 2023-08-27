@@ -32,8 +32,6 @@ const Page = () => {
   const onSubmit = async (values: AddFileFormState) => {
     const loadingToastId = toast.loading("Adding Consultation...");
 
-    console.log("formvalues", { values });
-
     setIsUploading(true);
 
     const folderRef = ref(fireStorage, "consultation");
@@ -54,7 +52,6 @@ const Page = () => {
       }
       // adding new Doc
       const consultDoc = await addDoc(consultationCollection, consultFile);
-
       const coverImgRef = ref(folderRef, `${consultDoc.id}-image`);
 
       try {

@@ -54,7 +54,7 @@ export default function Page() {
       // adding new Doc
       const docRef = await addDoc(categoriesCollection, docData);
 
-      const coverImgRef = ref(folderRef, `${docRef.id}-image`);
+      const coverImgRef = ref(folderRef, `subcategories/${docRef.id}-image`);
 
       try {
         await uploadBytes(coverImgRef, values.coverImage!);

@@ -105,7 +105,7 @@ export default function Page() {
   const deleteChosenSubcategory = async () => {
     const coverImgRef = ref(
       fireStorage,
-      "subcategories" + deleteAlert.id + "-cover"
+      "subcategories/" + deleteAlert.id + "-cover"
     );
 
     try {
@@ -137,7 +137,13 @@ export default function Page() {
           </div>
 
           <SassySelect
-            options={parentCategories}
+            options={[
+              {
+                id: "",
+                name: "All",
+              },
+              ...parentCategories,
+            ]}
             labelKey="name"
             valueKey="id"
             placeholder="Select Parent Category"
@@ -179,6 +185,9 @@ export default function Page() {
                         isOpen: true,
                         id: data.id,
                       });
+                    }}
+                    onContent={() => {
+                      router.push(`/subcategories/${data.id}/content`);
                     }}
                   />
                 </ListItem>
