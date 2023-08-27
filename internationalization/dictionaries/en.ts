@@ -88,6 +88,9 @@ export default {
       paid: "paid",
       amount: "Amount",
     },
+    subcategoryContent: {
+      formTitle: "Subcategory Content Form",
+    },
   },
   intervals: {
     "seconds#other": "{count} שניות",
@@ -146,5 +149,9 @@ export default {
     consultation: "Consultation",
     categories: "Categories",
     subcategories: "Subcategories",
+    addContent: "Add Content",
+    noContent: "No Content",
+    timeToRead: "Time to read",
+    content: "Content",
   },
 } as const;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useScopedI18n } from "@/internationalization/client";
+import { useI18n, useScopedI18n } from "@/internationalization/client";
 
 import {
   DropdownMenu,
@@ -14,10 +14,11 @@ type ActionsDropdownProps = {
   onEdit?: () => void;
   onDelete?: () => void;
   onApprove?: () => void;
+  onContent?: () => void;
 };
 
 export const ActionsDropdown = (props: ActionsDropdownProps) => {
-  const t = useScopedI18n("actions");
+  const t = useI18n();
 
   return (
     <DropdownMenu dir="rtl">
@@ -25,24 +26,26 @@ export const ActionsDropdown = (props: ActionsDropdownProps) => {
         <MoreVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-primary">
-      {
-          props.onApprove &&(
-            <DropdownMenuItem onClick={props.onApprove}>
-            {t("approve")}
+        {props.onApprove && (
+          <DropdownMenuItem onClick={props.onApprove}>
+            {t("actions.approve")}
           </DropdownMenuItem>
-          )
-        }
+        )}
+        {props.onContent && (
+          <DropdownMenuItem onClick={props.onContent}>
+            {t("words.content")}
+          </DropdownMenuItem>
+        )}
         {props.onEdit && (
           <DropdownMenuItem onClick={props.onEdit}>
-            {t("edit")}
+            {t("actions.edit")}
           </DropdownMenuItem>
         )}
         {props.onDelete && (
           <DropdownMenuItem onClick={props.onDelete}>
-            {t("delete")}
+            {t("actions.delete")}
           </DropdownMenuItem>
         )}
-        
       </DropdownMenuContent>
     </DropdownMenu>
   );

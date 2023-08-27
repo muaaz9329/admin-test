@@ -34,7 +34,10 @@ const Page = () => {
     setIsUploading(true);
 
     const studyDoc = doc(firestore, "consultation", editingForm?.id!);
-    const coverImgRef = ref(fireStorage, `${editingForm?.id}-image`);
+    const coverImgRef = ref(
+      fireStorage,
+      `consultation/${editingForm?.id}-image`
+    );
 
     try {
       const updatedDoc: Partial<ConsultationDoc> = {

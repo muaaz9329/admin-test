@@ -25,7 +25,10 @@ export default function Page() {
     setIsUploading(true);
 
     const docRef = doc(firestore, "subcategories", editingDoc?.id!);
-    const coverImgRef = ref(fireStorage, `${editingDoc?.id}-image`);
+    const coverImgRef = ref(
+      fireStorage,
+      `subcategories/${editingDoc?.id}-image`
+    );
 
     console.log({ values });
 
